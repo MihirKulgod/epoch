@@ -25,10 +25,11 @@ func train():
 	print("Starting training for: ", path)
 	
 	var pyPath = "res://scripts/ml/train.py"
+	var exePath = ProjectSettings.globalize_path("res://ml_env/Scripts/python.exe")
 	
 	var output := []
 	var exit_code := OS.execute(
-		"python",
+		exePath,
 		[ProjectSettings.globalize_path(pyPath), path],
 		output,
 		true

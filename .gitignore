@@ -1,3 +1,5 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+ml_env/
+scripts/ml/__pycache__/
