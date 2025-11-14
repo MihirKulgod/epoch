@@ -51,5 +51,9 @@ for epoch in range(epochs):
       avg_loss = total_loss / len(loader)
       print(f"Epoch {epoch+1}/{epochs}, Loss: {avg_loss:.6f}")
 
-torch.save(model.state_dict(), "player_model.pt")
-print("Saved trained model to player_model.pt")
+example_input = torch.randn(1, (MAX_PROJECTILES + 1) * 4)
+
+traced = torch.jit.trace(model, example_input)
+traced.save("player_model_ts.pt")
+
+print("Saved TorchScript model to player_model_ts.pt")

@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://c1y7fvh4ncvja"]
+[gd_scene load_steps=8 format=3 uid="uid://c1y7fvh4ncvja"]
 
 [ext_resource type="PackedScene" uid="uid://md0g04hn6162" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="PackedScene" uid="uid://coxe6iu3pgdnt" path="res://scenes/turret.tscn" id="2_0wfyh"]
 [ext_resource type="Script" uid="uid://bbgii5361rosh" path="res://scripts/projectile_blocked_area.gd" id="3_sugp2"]
 [ext_resource type="Script" uid="uid://dy83wd5jnj6qp" path="res://scripts/obj_count.gd" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://lglrsgdvhmim" path="res://scripts/log.gd" id="5_tbgi4"]
+[ext_resource type="Texture2D" uid="uid://ex2apgpfq5ub" path="res://icon.svg" id="6_o6xl0"]
+[ext_resource type="Script" uid="uid://dvslyb3b5nvme" path="res://scripts/player_ghost.gd" id="7_tipki"]
 
 [node name="Main" type="Node2D"]
 
@@ -30,7 +32,14 @@ offset_right = 292.0
 offset_bottom = 173.0
 script = ExtResource("4_jyhfs")
 
-[node name="Node" type="Node" parent="."]
+[node name="Log" type="Node" parent="."]
 script = ExtResource("5_tbgi4")
+
+[node name="PlayerGhost" type="Sprite2D" parent="."]
+modulate = Color(0.4627451, 1, 0.20392157, 0.45882353)
+position = Vector2(4.7683716e-07, -4.7683716e-07)
+scale = Vector2(0.21899413, 0.2213315)
+texture = ExtResource("6_o6xl0")
+script = ExtResource("7_tipki")
 
 [connection signal="body_entered" from="Area2D" to="Area2D" method="_on_body_entered"]
