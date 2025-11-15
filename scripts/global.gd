@@ -50,15 +50,17 @@ func _input(event):
 		get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
 		get_tree().quit()
 		
-	if event.is_action_pressed("train"):
+	if event.is_action_pressed("log"):
 		doLog()
+	
+	if event.is_action_pressed("train"):
+		train()
 	
 func doLog():
 	print("Logging..")
 	Logger_.file.flush()
 	Logger_.file.close()
 	print("Log file closed, output: " + ProjectSettings.globalize_path("user://"))
-	train()
 
 func train():
 	var path = ProjectSettings.globalize_path(logPath)

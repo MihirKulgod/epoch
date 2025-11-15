@@ -13,7 +13,7 @@ func connect_to_server():
 	if err != OK:
 		print("Connection error: ", err)
 
-func _process(delta):
+func _physics_process(delta):
 	socket.poll()
 	
 	var player = get_tree().get_first_node_in_group("player")
@@ -39,11 +39,10 @@ func _process(delta):
 		if not connected:
 			print("GD> Connected to socket!")
 		
-		if randi() % 20 == 0:
+		if randi() % 10 == 0:
 			socket.send_text(JSON.stringify({"player": player_state, "projectiles": projectile_list}))
 		
 		while socket.get_available_packet_count():
-			#print("RECEIVED PACKET HAHEHEHE")
 			var data = JSON.parse_string(socket.get_packet().get_string_from_utf8())
 			var arr = data["prediction"]
 			Global.futurePlayerPos = Vector2(arr[0], arr[1])

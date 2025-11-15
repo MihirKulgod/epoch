@@ -6,7 +6,7 @@ class PlayerModel(nn.Module):
             super().__init__()
 
             self.maxProj = maxProj
-            hidden_dim = 128
+            hidden_dim = 512
 
             self.net = nn.Sequential(
                   nn.Linear(4 * (1 + maxProj), hidden_dim),
