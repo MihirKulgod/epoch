@@ -9,13 +9,18 @@ class PlayerModel(nn.Module):
             hidden_dim = 512
 
             self.net = nn.Sequential(
-                  nn.Linear(4 * (1 + maxProj), hidden_dim),
+                  nn.Linear(4 * (1 + maxProj), 256),
                   nn.ReLU(),
-                  nn.Linear(hidden_dim, hidden_dim),
+                  nn.LayerNorm(256),
+
+                  nn.Linear(256, 256),
                   nn.ReLU(),
-                  nn.Linear(hidden_dim, hidden_dim // 2),
+                  nn.LayerNorm(256),
+
+                  nn.Linear(256, 128),
                   nn.ReLU(),
-                  nn.Linear(hidden_dim // 2, 2),
+
+                  nn.Linear(128, 2)
             )
       def forward(self, x):
             return self.net(x)

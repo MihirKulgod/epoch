@@ -1,15 +1,14 @@
 extends Node
 
-var file : FileAccess
+var temp_path := "user://session_log.jsonl"
+var real_path := Global.logPath
 
+var file: FileAccess
 var frame_count := 0
 
 func _ready() -> void:
-	if FileAccess.file_exists(Global.logPath):
-		file = FileAccess.open(Global.logPath, FileAccess.READ_WRITE)
-		file.seek_end()
-	else:
-		file = FileAccess.open(Global.logPath, FileAccess.WRITE_READ)
+	file = FileAccess.open(temp_path, FileAccess.WRITE)
+	frame_count = 0
 
 func log_frame(player_state: Array, projectile_list: Array) -> void:
 	var entry = {
@@ -20,3 +19,10 @@ func log_frame(player_state: Array, projectile_list: Array) -> void:
 
 	file.store_line(JSON.stringify(entry))
 	frame_count += 1
+
+func finalize_log():
+	if file:
+		file.flush()
+		file.close()
+		
+	DirAccess.copy_absolute(ProjectSettings.globalize_path(temp_path), ProjectSettings.globalize_path(real_path))

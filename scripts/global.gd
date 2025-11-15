@@ -1,6 +1,6 @@
 extends Node
 
-var logPath = "user://run_log.jsonl"
+var logPath := "user://run_log.jsonl"
 var exePath = ProjectSettings.globalize_path("res://ml_env/Scripts/python.exe")
 var pyPath = ProjectSettings.globalize_path("res://scripts/ml/")
 
@@ -58,9 +58,8 @@ func _input(event):
 	
 func doLog():
 	print("Logging..")
-	Logger_.file.flush()
-	Logger_.file.close()
-	print("Log file closed, output: " + ProjectSettings.globalize_path("user://"))
+	Logger_.finalize_log()
+	print("Log file saved to " + ProjectSettings.globalize_path(logPath))
 
 func train():
 	var path = ProjectSettings.globalize_path(logPath)

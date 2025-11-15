@@ -12,11 +12,11 @@ log_path = sys.argv[1]
 MAX_PROJECTILES = 20
 
 # The player's position will be predicted K physics frames in the future
-K = 30
+K = 20
 
 # TRAINING SETUP
 batch_size = 64
-epochs = 100
+epochs = 500
 learning_rate = 1e-3
 
 # -----------------

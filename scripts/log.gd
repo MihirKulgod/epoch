@@ -5,6 +5,9 @@ var connected := false
 
 var websocketURL = "ws://localhost:8766"
 
+var timer := 0.0
+var maxTime := 0.1
+
 func _ready():
 	connect_to_server()
 	
@@ -39,7 +42,10 @@ func _physics_process(delta):
 		if not connected:
 			print("GD> Connected to socket!")
 		
-		if randi() % 10 == 0:
+		timer += delta
+		
+		if timer > maxTime:
+			timer = 0
 			socket.send_text(JSON.stringify({"player": player_state, "projectiles": projectile_list}))
 		
 		while socket.get_available_packet_count():
