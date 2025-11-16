@@ -2,12 +2,12 @@ extends Node2D
 
 @onready var bullet := preload("res://scenes/bullet.tscn")
 
-var timer := 90
+var timer := 2.0
 
 func _process(delta: float) -> void:
 	timer -= delta
 	if timer <= 0:
-		timer = 60
+		timer = 0.4
 		shoot()
 	
 func shoot():

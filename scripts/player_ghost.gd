@@ -7,7 +7,7 @@ func _process(_delta: float) -> void:
 func _draw():
 	if Global.futurePlayerPositions:
 		var p = Global.futurePlayerPositions
-		var j = len(p) / 2
+		var j = int(len(p) / 2.0)
 		for a in range(j):
 			var i = 2*a
 			var v = to_local(Vector2(p[i], p[i+1]))

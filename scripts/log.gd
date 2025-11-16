@@ -39,8 +39,8 @@ func _physics_process(delta):
 	Logger_.log_frame(player_state, projectile_list)
 	
 	if socket.get_ready_state() == WebSocketPeer.STATE_OPEN:
-		if not connected:
-			print("GD> Connected to socket!")
+		#if not connected:
+			#print("GD> Connected to socket!")
 		
 		timer += delta
 		
