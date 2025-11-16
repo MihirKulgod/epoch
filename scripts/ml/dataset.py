@@ -12,23 +12,37 @@ def load_data(path):
                   frames.append(json.loads(line))
       return frames
 
-def make_samples(frames, K, maxProjectiles):
+def make_samples(frames, N, K, maxProjectiles):
       inputs = []
       targets = []
 
-      for i in range(len(frames) - K):
+      num_frames = len(frames)
+      max_start = num_frames - N * K
+
+      for i in range(max_start):
             f0 = frames[i]
-            f1 = frames[i + K]
 
             player = np.array(f0["player"], dtype=np.float32)
             proj = pad_projectiles(f0["projectiles"], maxProjectiles)
             input_vec = np.concatenate([player, proj])
-            target_vec = np.array(f1["player"][:2], dtype=np.float32)
+
+            future_positions = []
+
+            for n in range(1, N + 1):
+                  fn = frames[i + n * K]
+                  pos = np.array(fn["player"][:2], dtype=np.float32)
+                  future_positions.append(pos)
+
+            target_vec = np.concatenate(future_positions)
 
             inputs.append(input_vec)
             targets.append(target_vec)
 
-      return torch.as_tensor(inputs, dtype=torch.float32), torch.as_tensor(targets, dtype=torch.float32)
+      return (
+            torch.as_tensor(inputs, dtype=torch.float32),
+            torch.as_tensor(targets, dtype=torch.float32)
+      )
+
 
 
 def pad_projectiles(projectiles, max_no_projectiles):
@@ -40,9 +54,9 @@ def pad_projectiles(projectiles, max_no_projectiles):
       return arr.flatten()
 
 class GameDataset(Dataset):
-      def __init__(self, log_path, k=10, max_projectiles=20):
+      def __init__(self, log_path, n=5, k=10, max_projectiles=20):
             frames = load_data(log_path)
-            self.X, self.Y = make_samples(frames, k, max_projectiles)
+            self.X, self.Y = make_samples(frames, n, k, max_projectiles)
 
       def __len__(self):
             return len(self.X)

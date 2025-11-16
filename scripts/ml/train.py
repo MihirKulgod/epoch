@@ -11,8 +11,10 @@ log_path = sys.argv[1]
 # Max no. of projectiles to take into account
 MAX_PROJECTILES = 20
 
-# The player's position will be predicted K physics frames in the future
-K = 20
+# The number of frames between successive predicted positions
+K = 10
+# Number of positions to predict
+N = 3
 
 # TRAINING SETUP
 batch_size = 64
@@ -21,8 +23,8 @@ learning_rate = 1e-3
 
 # -----------------
 
-dataset = GameDataset(log_path, K, MAX_PROJECTILES)
-model = PlayerModel(MAX_PROJECTILES)
+dataset = GameDataset(log_path, N, K, MAX_PROJECTILES)
+model = PlayerModel(N, MAX_PROJECTILES)
 
 loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
 

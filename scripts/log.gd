@@ -51,5 +51,5 @@ func _physics_process(delta):
 		while socket.get_available_packet_count():
 			var data = JSON.parse_string(socket.get_packet().get_string_from_utf8())
 			var arr = data["prediction"]
-			Global.futurePlayerPos = Vector2(arr[0], arr[1])
+			Global.futurePlayerPositions = arr
 			

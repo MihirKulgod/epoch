@@ -4,7 +4,7 @@ var logPath := "user://run_log.jsonl"
 var exePath = ProjectSettings.globalize_path("res://ml_env/Scripts/python.exe")
 var pyPath = ProjectSettings.globalize_path("res://scripts/ml/")
 
-var futurePlayerPos := Vector2.ZERO
+var futurePlayerPositions := []
 
 var serverRunning := false
 var processID := -1
