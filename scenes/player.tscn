@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://md0g04hn6162"]
+[gd_scene load_steps=16 format=3 uid="uid://md0g04hn6162"]
 
 [ext_resource type="Script" uid="uid://xn3oan58kg5r" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://brl1l5p2lflv2" path="res://textures/player/player.png" id="2_g2els"]
+[ext_resource type="Texture2D" uid="uid://dkhh48no80o0k" path="res://textures/light.png" id="3_qhqgy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
 atlas = ExtResource("2_g2els")
@@ -68,14 +69,47 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3vyb7"]
-size = Vector2(14, 14)
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
+size = Vector2(16, 16)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_qhqgy"]
+polygon = PackedVector2Array(8, -8, 8, 8, -8, 8, -8, -8)
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
+scale = Vector2(0.625, 0.625)
+collision_mask = 129
 script = ExtResource("1_g2els")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+energy = 0.6
+range_z_max = 0
+shadow_enabled = true
+texture = ExtResource("3_qhqgy")
+texture_scale = 0.1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1.4210855e-14, 1.4210855e-14)
 sprite_frames = SubResource("SpriteFrames_d2wvv")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("RectangleShape2D_3vyb7")
+
+[node name="Dash" type="Timer" parent="."]
+one_shot = true
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 6
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+visible = false
+shape = SubResource("RectangleShape2D_qhqgy")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+visible = false
+occluder = SubResource("OccluderPolygon2D_qhqgy")
+
+[connection signal="body_entered" from="Hurtbox" to="." method="hurt"]

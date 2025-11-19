@@ -1,4 +1,10 @@
 extends Label
 
-func _process(_delta: float) -> void:
-	text = str(get_tree().get_node_count())
+var timer := 0.0
+var cd := 1.0
+
+func _process(delta: float) -> void:
+	timer += delta
+	if timer >= cd:
+		text = str(get_tree().get_node_count())
+		timer = 0

@@ -9,6 +9,9 @@ var futurePlayerPositions := []
 var serverRunning := false
 var processID := -1
 
+var player : Player = null
+var master : Master = null
+
 func _ready():
 	var thread := Thread.new()
 	var callable := Callable(self, "start_server_thread")
@@ -20,7 +23,7 @@ func start_server_thread():
 	processID = OS.create_process(
 		exePath,
 		[pyPath + "server.py"],
-		true
+		false
 	)
 
 	#print("Python server exited with code: ", exit_code)
@@ -78,3 +81,12 @@ func train():
 	print("--- Python Output ---")
 	for line in output:
 		print(line)
+
+func sign(expr := true) -> int:
+	return 1 if expr else -1
+
+func nearest_vector(v : Vector2, vs : Array):
+	var dr := vs.map(func(x): return abs(v.angle_to(x)))
+	return vs[dr.find(dr.min())]
+
+var DIAGONAL_AXES := [Vector2(1, 1), Vector2(1, -1), Vector2(-1, -1), Vector2(-1, 1)].map(func(x): return x.normalized())

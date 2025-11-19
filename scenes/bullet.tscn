@@ -8,7 +8,7 @@ bounce = 1.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y25gk"]
 size = Vector2(20, 4)
 
-[node name="RigidBody2D" type="RigidBody2D" groups=["projectile"]]
+[node name="RigidBody2D" type="RigidBody2D" groups=["destroyable", "projectile"]]
 collision_layer = 4
 collision_mask = 129
 physics_material_override = SubResource("PhysicsMaterial_mkf8s")

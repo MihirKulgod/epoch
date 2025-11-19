@@ -15,7 +15,6 @@
 shader = ExtResource("1_o6xl0")
 shader_parameter/tile_size = 100.0
 shader_parameter/time_scale = 1.0
-shader_parameter/mean_brightness = 0.3
 shader_parameter/player_pos = Vector2(0, 0)
 shader_parameter/influence_radius = 150.0
 shader_parameter/contrast_strength = 0.5

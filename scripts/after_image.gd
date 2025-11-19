@@ -1,7 +1,7 @@
 extends Node2D
 
 var timer := 0.0
-var lifetime := 0.3
+var lifetime := 0.2
 
 func _physics_process(delta: float) -> void:
 	timer += delta
