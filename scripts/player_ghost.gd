@@ -1,11 +1,9 @@
 extends Sprite2D
 
 func _process(_delta: float) -> void:
-	#queue_redraw()
-	return
+	queue_redraw()
 
 func _draw():
-	return
 	var o := 0.5
 	if Global.futurePlayerPositions:
 		var p = Global.futurePlayerPositions

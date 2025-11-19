@@ -40,7 +40,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7mxna"]
 size = Vector2(6, 1)
 
-[node name="DartLaser" type="RigidBody2D" groups=["destroyable"]]
+[node name="DartLaser" type="RigidBody2D" groups=["destroyable", "projectile"]]
 collision_layer = 4
 collision_mask = 128
 mass = 0.001

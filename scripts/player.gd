@@ -69,6 +69,9 @@ func _physics_process(delta: float) -> void:
 		dashTime -= delta
 		vec = dashVec
 		s = 200
+		anim.material.set_shader_parameter("enabled", true)
+	else:
+		anim.material.set_shader_parameter("enabled", false)
 	
 	velocity = vec.normalized() * s
 	
@@ -105,6 +108,8 @@ func set_direction(direction := Vector2.UP):
 
 func spawn_afterimage():
 	var ai : Node2D = afterimage.instantiate()
+	if dashTime > 0:
+		ai.modulate = Color.BLACK
 	ai.transform = ai.transform.scaled(scale)
 	ai.global_position = global_position
 	get_tree().current_scene.add_child(ai)

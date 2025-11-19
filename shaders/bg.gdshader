@@ -20,29 +20,24 @@ vec3 hsv2rgb(vec3 c) {
 
 void fragment() {
     vec2 tile = floor((UV / SCREEN_PIXEL_SIZE) / tile_size);
-	vec2 maxTile = floor(1.0 / (tile_size * SCREEN_PIXEL_SIZE));
-	// COLOR = vec4(tile / maxTile, 1, 1);
+	// vec2 maxTile = floor(1.0 / (tile_size * SCREEN_PIXEL_SIZE));
+	float r = random(tile);
 	
-	float radius = 0.03 * random(tile);
+	float radius = mix(0.02, 0.03, r);
 	
-	float brightness = mean_brightness + radius * sin(TIME * time_scale * mix(0.2, 0.9, random(tile)) + random(tile));
-
-    // Rainbow color cycling
-    float hue = mod(TIME * time_scale * 0.03 + mix(0.0, 0.06, random(tile)), 1.0);
-	float saturation = 0.4 + 0.15 * sin(TIME * time_scale * random(tile) * 0.1);
+	float brightness = mean_brightness + radius * sin(TIME * time_scale * mix(0.2, 0.9, r) + r);
+    float hue = mod(TIME * time_scale * 0.03 + mix(0.0, 0.06, r), 1.0);
+	float saturation = 0.2 + 0.15 * sin(TIME * time_scale * r * 0.1);
 
     vec3 color = hsv2rgb(vec3(hue, saturation, brightness));
 	COLOR = vec4(color, 1);
 
-    // Reactive contrast effect
-    float px_dist = distance(SCREEN_UV * SCREEN_PIXEL_SIZE, player_pos);
+    /*float px_dist = distance(SCREEN_UV * SCREEN_PIXEL_SIZE, player_pos);
 
     float influence = smoothstep(influence_radius, 0.0, px_dist);
-    // Contrast = invert color
     vec3 contrast_color = vec3(1.0) - color;
 
-    // Blend
     color = mix(color, contrast_color, influence * contrast_strength);
 
-    //COLOR = vec4(color, 1.0);
+    COLOR = vec4(color, 1.0);*/
 }

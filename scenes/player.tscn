@@ -1,8 +1,13 @@
-[gd_scene load_steps=16 format=3 uid="uid://md0g04hn6162"]
+[gd_scene load_steps=18 format=3 uid="uid://md0g04hn6162"]
 
+[ext_resource type="Shader" uid="uid://b0yy5uftfd8hh" path="res://shaders/dash.gdshader" id="1_dqkch"]
 [ext_resource type="Script" uid="uid://xn3oan58kg5r" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://brl1l5p2lflv2" path="res://textures/player/player.png" id="2_g2els"]
 [ext_resource type="Texture2D" uid="uid://dkhh48no80o0k" path="res://textures/light.png" id="3_qhqgy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dqkch"]
+shader = ExtResource("1_dqkch")
+shader_parameter/enabled = false
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qhqgy"]
 atlas = ExtResource("2_g2els")
@@ -90,6 +95,7 @@ texture = ExtResource("3_qhqgy")
 texture_scale = 0.1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_dqkch")
 position = Vector2(1.4210855e-14, 1.4210855e-14)
 sprite_frames = SubResource("SpriteFrames_d2wvv")
 

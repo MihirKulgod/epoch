@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://c1y7fvh4ncvja"]
+[gd_scene load_steps=17 format=3 uid="uid://c1y7fvh4ncvja"]
 
 [ext_resource type="Script" uid="uid://cpsf46rwy8pfs" path="res://scripts/master.gd" id="1_choun"]
 [ext_resource type="PackedScene" uid="uid://md0g04hn6162" path="res://scenes/player.tscn" id="1_o5qli"]
@@ -10,10 +10,11 @@
 [ext_resource type="PackedScene" uid="uid://deo70h6ltwkt4" path="res://scenes/enemy/dart/dart.tscn" id="7_o6xl0"]
 [ext_resource type="Script" uid="uid://dvslyb3b5nvme" path="res://scripts/player_ghost.gd" id="7_tipki"]
 [ext_resource type="Script" uid="uid://bki8naxnksc0i" path="res://scripts/fade.gd" id="9_85g3d"]
+[ext_resource type="PackedScene" uid="uid://dpx4j6jwnxl05" path="res://scenes/enemy/arrow/arrow.tscn" id="10_choun"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tipki"]
 shader = ExtResource("1_o6xl0")
-shader_parameter/tile_size = 100.0
+shader_parameter/tile_size = 500.0
 shader_parameter/time_scale = 1.0
 shader_parameter/mean_brightness = 0.3
 shader_parameter/player_pos = Vector2(0, 0)
@@ -113,34 +114,10 @@ position = Vector2(4.7683716e-07, -4.7683716e-07)
 scale = Vector2(0.21899413, 0.2213315)
 script = ExtResource("7_tipki")
 
-[node name="RigidBody2D" parent="." instance=ExtResource("7_o6xl0")]
-position = Vector2(160, 76)
-
-[node name="RigidBody2D2" parent="." instance=ExtResource("7_o6xl0")]
-position = Vector2(220, 69)
-
-[node name="RigidBody2D3" parent="." instance=ExtResource("7_o6xl0")]
-position = Vector2(203, 143)
-
-[node name="RigidBody2D4" parent="." instance=ExtResource("7_o6xl0")]
-position = Vector2(172, 41)
-
-[node name="RigidBody2D5" parent="." instance=ExtResource("7_o6xl0")]
-position = Vector2(206, 93)
-
-[node name="RigidBody2D6" parent="." instance=ExtResource("7_o6xl0")]
-position = Vector2(136, 141)
-
-[node name="RigidBody2D7" parent="." instance=ExtResource("7_o6xl0")]
-position = Vector2(126, 78)
-
-[node name="RigidBody2D8" parent="." instance=ExtResource("7_o6xl0")]
-position = Vector2(160, 112)
-
-[node name="RigidBody2D9" parent="." instance=ExtResource("7_o6xl0")]
-position = Vector2(264, 165)
-
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
+
+[node name="Arrow" parent="." instance=ExtResource("10_choun")]
+position = Vector2(215, 53)
 
 [node name="Black" type="CanvasLayer" parent="."]
 process_mode = 3
@@ -153,6 +130,12 @@ offset_right = 300.0
 offset_bottom = 180.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-color = Color(0, 0, 0, 1)
+color = Color(0, 0, 0, 0)
+
+[node name="Dart" parent="." instance=ExtResource("7_o6xl0")]
+position = Vector2(231, 100)
+
+[node name="Dart2" parent="." instance=ExtResource("7_o6xl0")]
+position = Vector2(254, 116)
 
 [connection signal="body_entered" from="Border/Area2D" to="Border/Area2D" method="_on_body_entered"]
