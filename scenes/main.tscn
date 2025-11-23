@@ -1,20 +1,17 @@
-[gd_scene load_steps=17 format=3 uid="uid://c1y7fvh4ncvja"]
+[gd_scene load_steps=14 format=3 uid="uid://c1y7fvh4ncvja"]
 
 [ext_resource type="Script" uid="uid://cpsf46rwy8pfs" path="res://scripts/master.gd" id="1_choun"]
-[ext_resource type="PackedScene" uid="uid://md0g04hn6162" path="res://scenes/player.tscn" id="1_o5qli"]
 [ext_resource type="Shader" uid="uid://do8oeqmdsiuhk" path="res://shaders/bg.gdshader" id="1_o6xl0"]
 [ext_resource type="Script" uid="uid://cxd6rf5dp0ruo" path="res://scripts/bg_rect.gd" id="2_tipki"]
 [ext_resource type="Script" uid="uid://bbgii5361rosh" path="res://scripts/projectile_blocked_area.gd" id="3_sugp2"]
 [ext_resource type="Script" uid="uid://dy83wd5jnj6qp" path="res://scripts/obj_count.gd" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://lglrsgdvhmim" path="res://scripts/log.gd" id="5_tbgi4"]
-[ext_resource type="PackedScene" uid="uid://deo70h6ltwkt4" path="res://scenes/enemy/dart/dart.tscn" id="7_o6xl0"]
 [ext_resource type="Script" uid="uid://dvslyb3b5nvme" path="res://scripts/player_ghost.gd" id="7_tipki"]
 [ext_resource type="Script" uid="uid://bki8naxnksc0i" path="res://scripts/fade.gd" id="9_85g3d"]
-[ext_resource type="PackedScene" uid="uid://dpx4j6jwnxl05" path="res://scenes/enemy/arrow/arrow.tscn" id="10_choun"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tipki"]
 shader = ExtResource("1_o6xl0")
-shader_parameter/tile_size = 500.0
+shader_parameter/tile_size = 750.0
 shader_parameter/time_scale = 1.0
 shader_parameter/mean_brightness = 0.3
 shader_parameter/player_pos = Vector2(0, 0)
@@ -46,9 +43,6 @@ offset_bottom = 180.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("2_tipki")
-
-[node name="Player" parent="." instance=ExtResource("1_o5qli")]
-position = Vector2(53, 89)
 
 [node name="Border" type="StaticBody2D" parent="."]
 collision_layer = 128
@@ -116,9 +110,6 @@ script = ExtResource("7_tipki")
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 
-[node name="Arrow" parent="." instance=ExtResource("10_choun")]
-position = Vector2(215, 53)
-
 [node name="Black" type="CanvasLayer" parent="."]
 process_mode = 3
 script = ExtResource("9_85g3d")
@@ -131,11 +122,5 @@ offset_bottom = 180.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 color = Color(0, 0, 0, 0)
-
-[node name="Dart" parent="." instance=ExtResource("7_o6xl0")]
-position = Vector2(231, 100)
-
-[node name="Dart2" parent="." instance=ExtResource("7_o6xl0")]
-position = Vector2(254, 116)
 
 [connection signal="body_entered" from="Border/Area2D" to="Border/Area2D" method="_on_body_entered"]

@@ -27,7 +27,7 @@ void fragment() {
 	
 	float brightness = mean_brightness + radius * sin(TIME * time_scale * mix(0.2, 0.9, r) + r);
     float hue = mod(TIME * time_scale * 0.03 + mix(0.0, 0.06, r), 1.0);
-	float saturation = 0.2 + 0.15 * sin(TIME * time_scale * r * 0.1);
+	float saturation = 0.3 + 0.15 * sin(TIME * time_scale * r * 0.1);
 
     vec3 color = hsv2rgb(vec3(hue, saturation, brightness));
 	COLOR = vec4(color, 1);

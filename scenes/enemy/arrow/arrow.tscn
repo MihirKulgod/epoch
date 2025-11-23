@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dpx4j6jwnxl05"]
+[gd_scene load_steps=10 format=3 uid="uid://dpx4j6jwnxl05"]
 
 [ext_resource type="Texture2D" uid="uid://buw4h42ms0xii" path="res://textures/enemy/arrow/arrow.png" id="1_hlqiu"]
 [ext_resource type="Script" uid="uid://bmhqlh05f5nnj" path="res://scripts/enemy/arrow/arrow.gd" id="1_kt8ou"]
+[ext_resource type="Texture2D" uid="uid://dkhh48no80o0k" path="res://textures/light.png" id="3_0yj6a"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_kt8ou"]
 atlas = ExtResource("1_hlqiu")
@@ -41,13 +42,13 @@ animations = [{
 }],
 "loop": false,
 "name": &"shoot",
-"speed": 6.0
+"speed": 10.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hlqiu"]
 size = Vector2(6, 6)
 
-[node name="Arrow" type="RigidBody2D"]
+[node name="Arrow" type="RigidBody2D" groups=["enemy"]]
 collision_layer = 2
 collision_mask = 128
 gravity_scale = 0.0
@@ -70,4 +71,11 @@ wait_time = 3.0
 one_shot = true
 autostart = true
 
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(1, 0, 0, 1)
+energy = 0.0
+texture = ExtResource("3_0yj6a")
+texture_scale = 0.05
+
+[connection signal="frame_changed" from="AnimatedSprite2D" to="." method="anim_frame_changed"]
 [connection signal="timeout" from="Shoot" to="." method="reload"]

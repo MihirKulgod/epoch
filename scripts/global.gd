@@ -17,6 +17,8 @@ func _ready():
 	var callable := Callable(self, "start_server_thread")
 	thread.start(callable)
 	
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	
 func start_server_thread():
 	serverRunning = true
 	#var output := []
@@ -90,3 +92,12 @@ func nearest_vector(v : Vector2, vs : Array):
 	return vs[dr.find(dr.min())]
 
 var DIAGONAL_AXES := [Vector2(1, 1), Vector2(1, -1), Vector2(-1, -1), Vector2(-1, 1)].map(func(x): return x.normalized())
+
+func oneIn(x : int) -> bool:
+	var r = randi_range(1, x)
+	return r == 1
+
+func createAt(object : Resource, position := Vector2.ZERO):
+	var o = object.instantiate()
+	o.global_position = position
+	get_tree().current_scene.add_child(o)

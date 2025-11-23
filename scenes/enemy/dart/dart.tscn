@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://deo70h6ltwkt4"]
 
-[ext_resource type="Script" uid="uid://doa3iygxft8wn" path="res://scripts/enemy/dart.gd" id="1_880sh"]
+[ext_resource type="Script" uid="uid://doa3iygxft8wn" path="res://scripts/enemy/dart/dart.gd" id="1_880sh"]
 [ext_resource type="Texture2D" uid="uid://b6vseix1gnido" path="res://textures/enemy/dart/dart.png" id="1_rkx42"]
 [ext_resource type="Texture2D" uid="uid://dkhh48no80o0k" path="res://textures/light.png" id="3_p0cjd"]
 
@@ -76,7 +76,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rkx42"]
 size = Vector2(8, 8)
 
-[node name="Dart" type="RigidBody2D"]
+[node name="Dart" type="RigidBody2D" groups=["enemy"]]
 collision_layer = 2
 collision_mask = 128
 physics_material_override = SubResource("PhysicsMaterial_880sh")

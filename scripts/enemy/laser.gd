@@ -4,8 +4,8 @@ class_name Laser
 
 var speed := 100.0
 
-func init(speed, direction):
-	self.speed = speed
+func init(speed_ : float, direction : Vector2):
+	self.speed = speed_
 	linear_velocity = direction.normalized() * speed
 
 func _process(_delta: float) -> void:

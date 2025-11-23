@@ -115,4 +115,7 @@ func spawn_afterimage():
 	get_tree().current_scene.add_child(ai)
 
 func hurt(_body: Node2D) -> void:
-	Global.master.die()
+	if _body.is_in_group("projectile"):
+		Global.master.die()
+	elif _body is Enemy:
+		_body.explode()

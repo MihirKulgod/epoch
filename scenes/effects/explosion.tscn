@@ -1,0 +1,45 @@
+[gd_scene load_steps=3 format=3 uid="uid://bcbqbdet0234s"]
+
+[ext_resource type="Script" uid="uid://d0dtiwgqodl3x" path="res://scripts/effects/explosion.gd" id="1_8dm26"]
+
+[sub_resource type="Curve" id="Curve_fqp2o"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="Explosion" type="Node2D"]
+script = ExtResource("1_8dm26")
+
+[node name="White" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 4
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 5.0
+initial_velocity_max = 10.0
+damping_min = 8.738
+damping_max = 8.738
+angle_max = 90.0
+scale_amount_min = 3.0
+scale_amount_max = 6.0
+scale_amount_curve = SubResource("Curve_fqp2o")
+
+[node name="Orange" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 6
+lifetime = 1.5
+one_shot = true
+explosiveness = 1.0
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 7.0
+initial_velocity_max = 13.0
+damping_min = 8.738
+damping_max = 8.738
+angle_max = 90.0
+scale_amount_min = 4.0
+scale_amount_max = 8.0
+scale_amount_curve = SubResource("Curve_fqp2o")
+color = Color(1, 0.6, 0, 1)

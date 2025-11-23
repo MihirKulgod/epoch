@@ -20,6 +20,10 @@ func _physics_process(delta):
 	socket.poll()
 	
 	var player = get_tree().get_first_node_in_group("player")
+	
+	if not player:
+		return
+	
 	var projectiles = get_tree().get_nodes_in_group("projectile")
 
 	var pos = player.global_position

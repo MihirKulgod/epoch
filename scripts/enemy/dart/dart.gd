@@ -1,4 +1,4 @@
-extends RigidBody2D
+extends Enemy
 
 @onready var anim := $AnimatedSprite2D
 @onready var cdTimer := $"Shoot CD"

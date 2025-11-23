@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 Global="*res://scripts/global.gd"
 Logger_="*res://scripts/logger_.gd"
+Entity="*res://entity.gd"
 
 [display]
 
@@ -33,6 +34,7 @@ window/stretch/mode="canvas_items"
 player=""
 projectile=""
 destroyable=""
+enemy=""
 
 [input]
 
