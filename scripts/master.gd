@@ -2,13 +2,11 @@ extends Node
 
 class_name Master
 
-@onready var blackout : Blackout = $"../Black"
-
 var current_round := 0
 
 func _ready() -> void:
 	Global.master = self
-	start()
+	Global.fade_in()
 	call_deferred("load_round")
 
 func load_round():
@@ -18,21 +16,12 @@ func load_round():
 	for entry in entities:
 		Global.createAt(Entity.find(entry.get("name")), true_coords(entry.get("position")))
 	
-func start() -> void:
-	get_tree().paused = true
-	await blackout.ready
-	await blackout.fade_in(1)
-	get_tree().paused = false
-
-func end() -> void:
-	get_tree().paused = true
-	await blackout.fade_out(1.5)
-	await get_tree().create_timer(1).timeout
-	get_tree().paused = false
-	
 func die() -> void:
-	end()
-	get_tree().call_deferred("reload_current_scene")
+	await Global.fade_out()
+	call_deferred("reload")
+
+func reload():
+	var result = get_tree().reload_current_scene()
 
 func true_coords(vec : Vector2):
 	var w = ProjectSettings.get_setting("display/window/size/viewport_width")
@@ -44,7 +33,7 @@ func check_round_beaten() -> void:
 		if not enemy.is_queued_for_deletion():
 			return
 	await get_tree().create_timer(1).timeout
-	await end()
+	await Global.fade_out()
 	call_deferred("win_round")
 
 func win_round():

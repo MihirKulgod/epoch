@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c1y7fvh4ncvja"]
+[gd_scene load_steps=13 format=3 uid="uid://c1y7fvh4ncvja"]
 
 [ext_resource type="Script" uid="uid://cpsf46rwy8pfs" path="res://scripts/master.gd" id="1_choun"]
 [ext_resource type="Shader" uid="uid://do8oeqmdsiuhk" path="res://shaders/bg.gdshader" id="1_o6xl0"]
@@ -7,7 +7,6 @@
 [ext_resource type="Script" uid="uid://dy83wd5jnj6qp" path="res://scripts/obj_count.gd" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://lglrsgdvhmim" path="res://scripts/log.gd" id="5_tbgi4"]
 [ext_resource type="Script" uid="uid://dvslyb3b5nvme" path="res://scripts/player_ghost.gd" id="7_tipki"]
-[ext_resource type="Script" uid="uid://bki8naxnksc0i" path="res://scripts/fade.gd" id="9_85g3d"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tipki"]
 shader = ExtResource("1_o6xl0")
@@ -31,9 +30,6 @@ distance = -236.5
 distance = -70.5
 
 [node name="Main" type="Node2D"]
-
-[node name="Master" type="Node" parent="."]
-script = ExtResource("1_choun")
 
 [node name="ColorRect" type="ColorRect" parent="."]
 z_index = -1000
@@ -108,19 +104,7 @@ position = Vector2(4.7683716e-07, -4.7683716e-07)
 scale = Vector2(0.21899413, 0.2213315)
 script = ExtResource("7_tipki")
 
-[node name="CanvasModulate" type="CanvasModulate" parent="."]
-
-[node name="Black" type="CanvasLayer" parent="."]
-process_mode = 3
-script = ExtResource("9_85g3d")
-
-[node name="ColorRect" type="ColorRect" parent="Black"]
-offset_left = -1.0
-offset_top = -3.0
-offset_right = 300.0
-offset_bottom = 180.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-color = Color(0, 0, 0, 0)
+[node name="Master" type="Node" parent="."]
+script = ExtResource("1_choun")
 
 [connection signal="body_entered" from="Border/Area2D" to="Border/Area2D" method="_on_body_entered"]

@@ -4,6 +4,9 @@ var logPath := "user://run_log.jsonl"
 var exePath = ProjectSettings.globalize_path("res://ml_env/Scripts/python.exe")
 var pyPath = ProjectSettings.globalize_path("res://scripts/ml/")
 
+var fadeScene := preload("res://scenes/effects/fading.tscn")
+var blackout : Node = null
+
 var futurePlayerPositions := []
 
 var serverRunning := false
@@ -101,3 +104,25 @@ func createAt(object : Resource, position := Vector2.ZERO):
 	var o = object.instantiate()
 	o.global_position = position
 	get_tree().current_scene.add_child(o)
+
+func add_blackout():
+	if blackout:
+		blackout.queue_free()
+	
+	blackout = fadeScene.instantiate()
+	get_tree().root.call_deferred("add_child", blackout)
+
+func fade_in(time := 1.0):
+	print("Fade in called")
+	add_blackout()
+	await get_tree().process_frame
+	
+	get_tree().paused = true
+	await blackout.fade_in(time)
+	get_tree().paused = false
+
+func fade_out(time := 1.5):
+	get_tree().paused = true
+	await blackout.fade_out(time)
+	await get_tree().create_timer(1).timeout
+	get_tree().paused = false

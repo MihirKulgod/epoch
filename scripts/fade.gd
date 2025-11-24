@@ -1,9 +1,9 @@
-extends CanvasLayer
+extends Node2D
 
 class_name Blackout
 
-@onready var cover := $ColorRect
-@onready var darken := $"../CanvasModulate"
+@onready var cover := $Black/ColorRect
+@onready var darken := $CanvasModulate
 
 func fade_in(time := 1.0, darken_delay := 0.3, darken_time := 0.7):
 	cover.color = Color.BLACK
