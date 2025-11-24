@@ -15,12 +15,17 @@ var processID := -1
 var player : Player = null
 var master : Master = null
 
+var current_round := 0
+
 func _ready():
 	var thread := Thread.new()
 	var callable := Callable(self, "start_server_thread")
 	thread.start(callable)
 	
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	
+	current_round = Data.load_round()
+	print("Round loaded as "+str(current_round))
 	
 func start_server_thread():
 	serverRunning = true
@@ -52,18 +57,24 @@ func shutdown_server():
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		shutdown_server()
+		
+		print("Round saved as "+str(current_round))
+		Data.save_round(current_round)
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
-		get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
-		get_tree().quit()
+		quit()
 		
 	if event.is_action_pressed("log"):
 		doLog()
 	
 	if event.is_action_pressed("train"):
 		train()
-	
+
+func quit():
+	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
+	get_tree().quit()
+
 func doLog():
 	print("Logging..")
 	Logger_.finalize_log()
@@ -106,14 +117,16 @@ func createAt(object : Resource, position := Vector2.ZERO):
 	get_tree().current_scene.add_child(o)
 
 func add_blackout():
-	if blackout:
-		blackout.queue_free()
+	remove_blackout()
 	
 	blackout = fadeScene.instantiate()
 	get_tree().root.call_deferred("add_child", blackout)
 
-func fade_in(time := 1.0):
-	print("Fade in called")
+func remove_blackout():
+	if blackout:
+		blackout.queue_free()
+
+func fade_in(time := 0.8):
 	add_blackout()
 	await get_tree().process_frame
 	
@@ -121,7 +134,7 @@ func fade_in(time := 1.0):
 	await blackout.fade_in(time)
 	get_tree().paused = false
 
-func fade_out(time := 1.5):
+func fade_out(time := 0.8):
 	get_tree().paused = true
 	await blackout.fade_out(time)
 	await get_tree().create_timer(1).timeout

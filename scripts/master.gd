@@ -2,15 +2,16 @@ extends Node
 
 class_name Master
 
-var current_round := 0
-
 func _ready() -> void:
 	Global.master = self
 	Global.fade_in()
 	call_deferred("load_round")
+	
+	await get_tree().create_timer(0.2).timeout
+	$"../Cover".queue_free()
 
 func load_round():
-	var r : Dictionary = rounds[current_round]
+	var r : Dictionary = rounds[Global.current_round]
 	Global.createAt(Entity.find("player"), true_coords(r.get("player_position")))
 	var entities : Array = r.get("entities")
 	for entry in entities:
@@ -37,6 +38,13 @@ func check_round_beaten() -> void:
 	call_deferred("win_round")
 
 func win_round():
+	print("Round "+str(Global.current_round)+" has been beaten!")
+	if Global.current_round == rounds.back().get("number"):
+		get_tree().change_scene_to_file('res://scenes/game_beaten.tscn')
+		Global.current_round = 0
+		return
+	
+	Global.current_round += 1
 	get_tree().change_scene_to_file('res://scenes/win.tscn')
 
 func new_entry(entity_name : String, pos : Vector2):
@@ -60,8 +68,30 @@ var rounds := [
 		[
 			new_entry("dart", Vector2(0.1, 0.1)),
 			new_entry("dart", Vector2(0.9, 0.1)),
+		]
+	),
+	new_round(
+		1,
+		Vector2(0.5, 0.5),
+		[
+			new_entry("dart", Vector2(0.1, 0.1)),
+			new_entry("dart", Vector2(0.9, 0.1)),
 			new_entry("arrow", Vector2(0.05, 0.05)),
 			new_entry("arrow", Vector2(0.95, 0.05)),
+		]
+	),
+	new_round(
+		2,
+		Vector2(0.5, 0.5),
+		[
+			new_entry("arrow", Vector2(0.05, 0.95)),
+			new_entry("arrow", Vector2(0.05, 0.05)),
+			new_entry("arrow", Vector2(0.95, 0.95)),
+			new_entry("arrow", Vector2(0.95, 0.05)),
+			new_entry("arrow", Vector2(0.95, 0.5)),
+			new_entry("arrow", Vector2(0.05, 0.5)),
+			new_entry("arrow", Vector2(0.5, 0.05)),
+			new_entry("arrow", Vector2(0.5, 0.95)),
 		]
 	),
 ]

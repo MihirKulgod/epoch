@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://c1y7fvh4ncvja"]
+[gd_scene load_steps=14 format=3 uid="uid://c1y7fvh4ncvja"]
 
 [ext_resource type="Script" uid="uid://cpsf46rwy8pfs" path="res://scripts/master.gd" id="1_choun"]
 [ext_resource type="Shader" uid="uid://do8oeqmdsiuhk" path="res://shaders/bg.gdshader" id="1_o6xl0"]
+[ext_resource type="PackedScene" uid="uid://d2rigfsl3to6u" path="res://scenes/effects/cover.tscn" id="1_tipki"]
 [ext_resource type="Script" uid="uid://cxd6rf5dp0ruo" path="res://scripts/bg_rect.gd" id="2_tipki"]
 [ext_resource type="Script" uid="uid://bbgii5361rosh" path="res://scripts/projectile_blocked_area.gd" id="3_sugp2"]
 [ext_resource type="Script" uid="uid://dy83wd5jnj6qp" path="res://scripts/obj_count.gd" id="4_jyhfs"]
@@ -30,6 +31,8 @@ distance = -236.5
 distance = -70.5
 
 [node name="Main" type="Node2D"]
+
+[node name="Cover" parent="." instance=ExtResource("1_tipki")]
 
 [node name="ColorRect" type="ColorRect" parent="."]
 z_index = -1000

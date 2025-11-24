@@ -2,5 +2,6 @@ extends Button
 
 @export var scene : PackedScene = null
 
-func _ready() -> void:
+func _on_pressed() -> void:
+	await Global.fade_out()
 	get_tree().change_scene_to_packed(scene)
