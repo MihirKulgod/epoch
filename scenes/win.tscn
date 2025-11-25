@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bd204h6wi8eid"]
+[gd_scene load_steps=10 format=3 uid="uid://bd204h6wi8eid"]
 
 [ext_resource type="Script" uid="uid://c1o3yldu5frqp" path="res://scripts/scenes/win.gd" id="1_826fv"]
 [ext_resource type="Script" uid="uid://1d71t56g10xb" path="res://scripts/ui/switch_to_scene.gd" id="1_r4oei"]
 [ext_resource type="PackedScene" uid="uid://d2rigfsl3to6u" path="res://scenes/effects/cover.tscn" id="2_yxbqr"]
 [ext_resource type="PackedScene" uid="uid://c1y7fvh4ncvja" path="res://scenes/main.tscn" id="3_iiocm"]
 [ext_resource type="Script" uid="uid://dln103kfkub5y" path="res://scripts/ui/display_round_number.gd" id="3_tylv2"]
+[ext_resource type="Script" uid="uid://dps3gu6se0ekd" path="res://scripts/ui/status.gd" id="4_5vxan"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_826fv"]
 content_margin_left = 4.0
@@ -76,6 +77,24 @@ fit_content = true
 scroll_active = false
 horizontal_alignment = 1
 script = ExtResource("3_tylv2")
+
+[node name="Status" type="RichTextLabel" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.7
+anchor_right = 0.5
+anchor_bottom = 0.7
+offset_left = -150.0
+offset_right = 150.0
+offset_bottom = 50.0
+grow_horizontal = 2
+theme_override_font_sizes/normal_font_size = 12
+text = "Waiting to start training.."
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+script = ExtResource("4_5vxan")
 
 [node name="Button" type="Button" parent="Control"]
 z_index = 100

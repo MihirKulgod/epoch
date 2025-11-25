@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://cictfc4ljrf4h"]
+[gd_scene load_steps=11 format=3 uid="uid://cictfc4ljrf4h"]
 
 [ext_resource type="Script" uid="uid://c1o3yldu5frqp" path="res://scripts/scenes/win.gd" id="1_8ln24"]
 [ext_resource type="PackedScene" uid="uid://d2rigfsl3to6u" path="res://scenes/effects/cover.tscn" id="2_rtw2f"]
 [ext_resource type="Script" uid="uid://1d71t56g10xb" path="res://scripts/ui/switch_to_scene.gd" id="3_oa1go"]
 [ext_resource type="PackedScene" uid="uid://c1y7fvh4ncvja" path="res://scenes/main.tscn" id="4_tbmy8"]
 [ext_resource type="Script" uid="uid://clmbu8p77nm8" path="res://scripts/ui/quit_game.gd" id="5_jk1qb"]
+[ext_resource type="Script" uid="uid://bpx0cjotvffol" path="res://scripts/ui/reset_and_new.gd" id="5_oa1go"]
+[ext_resource type="Script" uid="uid://dred6mv70ki5d" path="res://scripts/ui/dotdotdot.gd" id="6_rtw2f"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_826fv"]
 content_margin_left = 4.0
@@ -46,7 +48,6 @@ corner_detail = 5
 script = ExtResource("1_8ln24")
 
 [node name="Cover" parent="." instance=ExtResource("2_rtw2f")]
-visible = false
 
 [node name="ColorRect" type="ColorRect" parent="."]
 offset_right = 300.0
@@ -79,7 +80,6 @@ scroll_active = false
 horizontal_alignment = 1
 
 [node name="Button" type="Button" parent="Control"]
-z_index = 100
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -104,7 +104,6 @@ script = ExtResource("3_oa1go")
 scene = ExtResource("4_tbmy8")
 
 [node name="Button3" type="Button" parent="Control"]
-z_index = 100
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -125,11 +124,9 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_826fv")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_afbyi")
 theme_override_styles/hover = SubResource("StyleBoxFlat_r4oei")
 text = "New Game"
-script = ExtResource("3_oa1go")
-scene = ExtResource("4_tbmy8")
+script = ExtResource("5_oa1go")
 
 [node name="Button2" type="Button" parent="Control"]
-z_index = 100
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -151,6 +148,33 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_afbyi")
 theme_override_styles/hover = SubResource("StyleBoxFlat_r4oei")
 text = "Quit"
 script = ExtResource("5_jk1qb")
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+offset_right = 300.0
+offset_bottom = 180.0
+color = Color(0, 0, 0, 0.85490197)
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="ColorRect2"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.3
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -34.0
+offset_right = 150.0
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 16
+text = "Establishing connection..."
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("6_rtw2f")
+label = "Establishing connection"
 
 [connection signal="pressed" from="Control/Button" to="Control/Button" method="_on_pressed"]
 [connection signal="pressed" from="Control/Button3" to="Control/Button3" method="_on_pressed"]

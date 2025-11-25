@@ -103,6 +103,7 @@ script = ExtResource("5_tbgi4")
 
 [node name="PlayerGhost" type="Sprite2D" parent="."]
 modulate = Color(0.4627451, 1, 0.20392157, 0.45882353)
+z_index = 4096
 position = Vector2(4.7683716e-07, -4.7683716e-07)
 scale = Vector2(0.21899413, 0.2213315)
 script = ExtResource("7_tipki")

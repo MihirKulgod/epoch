@@ -66,7 +66,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7mxna"]
-size = Vector2(6, 1)
+size = Vector2(2, 2)
 
 [node name="PlusLaser" type="RigidBody2D" groups=["destroyable", "projectile"]]
 collision_layer = 4
@@ -107,8 +107,6 @@ autoplay = "default"
 frame_progress = 0.82119906
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
-position = Vector2(0, 0.5)
 shape = SubResource("RectangleShape2D_7mxna")
 
 [node name="PointLight2D" type="PointLight2D" parent="."]

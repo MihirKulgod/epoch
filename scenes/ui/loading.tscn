@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=3 uid="uid://derpbdgbex0lc"]
+
+[ext_resource type="Texture2D" uid="uid://cfaplfpekniiy" path="res://textures/ui/load.png" id="1_35gka"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0ih7j"]
+atlas = ExtResource("1_35gka")
+region = Rect2(0, 0, 6, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wkfxc"]
+atlas = ExtResource("1_35gka")
+region = Rect2(6, 0, 6, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sjr32"]
+atlas = ExtResource("1_35gka")
+region = Rect2(12, 0, 6, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gbjog"]
+atlas = ExtResource("1_35gka")
+region = Rect2(18, 0, 6, 6)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2b8us"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0ih7j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wkfxc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sjr32")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gbjog")
+}],
+"loop": true,
+"name": &"default",
+"speed": 7.0
+}]
+
+[node name="Loading" type="Node2D"]
+z_index = 4000
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 300.0
+offset_bottom = 180.0
+color = Color(0, 0, 0, 0.70980394)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(150, 90)
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_2b8us")
+autoplay = "default"
+frame_progress = 0.4764297

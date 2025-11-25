@@ -1,11 +1,15 @@
 extends Node
 
+signal reset_complete
+
 var socket := WebSocketPeer.new()
 
 var websocketURL = "ws://localhost:8766"
 
 var timer := 0.0
 var maxTime := 0.1
+
+var connected := false
 
 func _ready():
 	connect_to_server()
@@ -27,7 +31,13 @@ func _physics_process(delta):
 		
 		while socket.get_available_packet_count():
 			receive()
-			
+
+func request_reset():
+	socket.send_text(JSON.stringify({
+		"type": "reset"
+	}))
+	await self.reset_complete
+
 func request_inference():
 	if not Logger_.last_player_state or not Logger_.last_projectile_list:
 		return
@@ -56,16 +66,37 @@ func receive():
 		return
 	
 	match data["type"]:
+		"connection_success":
+			connected = true
 		"prediction":
 			received_prediction(data)
 		"progress":
 			received_progress(data)
+		"train_start":
+			received_start(data)
+		"train_complete":
+			received_end(data)
+		"reset":
+			reset(data)
+		"error":
+			printerr(str(data.get("message", "Unknown error message received!")))
 		_:
 			print("Received unknown packet type: " + str(data["type"]))
 
+func reset(_data : Dictionary):
+	emit_signal("reset_complete")
+
+func received_end(_data : Dictionary):
+	Global.trainingEnded = true
+
+func received_start(data : Dictionary):
+	Global.max_epoch = data.get("max_epoch", -1)
+	Global.trainingStarted = true
+
 func received_progress(data : Dictionary):
 	print("Received progress packet!")
-	print(str(data["progress"]))
+	Global.epoch = data.get("epoch", -1)
+	Global.loss = data.get("loss", -1)
 
 func received_prediction(data : Dictionary):
 	print("Received prediction packet!")

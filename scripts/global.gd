@@ -4,8 +4,10 @@ var logPath := "user://run_log.jsonl"
 var exePath = ProjectSettings.globalize_path("res://ml_env/Scripts/python.exe")
 var pyPath = ProjectSettings.globalize_path("res://scripts/ml/")
 
-var fadeScene := preload("res://scenes/effects/fading.tscn")
+@onready var fadeScene := preload("res://scenes/effects/fading.tscn")
+@onready var loadScene := preload("res://scenes/ui/loading.tscn")
 var blackout : Node = null
+var loading : Node = null
 
 var futurePlayerPositions := []
 
@@ -17,6 +19,12 @@ var master : Master = null
 var current_round := 0
 var roundRunning := false
 var target_future := false
+
+var loss := 0.0
+var epoch := 0
+var max_epoch := 0
+var trainingStarted := false
+var trainingEnded := false
 
 func _ready():
 	var thread := Thread.new()
@@ -73,6 +81,9 @@ func doLog():
 	print("Log file saved to " + ProjectSettings.globalize_path(logPath))
 
 func train():
+	printerr("Old train function called in Global!")
+	quit()
+	
 	var path = ProjectSettings.globalize_path(logPath)
 
 	print("Starting training for: ", path)
@@ -131,3 +142,12 @@ func fade_out(time := 0.8):
 	await blackout.fade_out(time)
 	await get_tree().create_timer(1).timeout
 	get_tree().paused = false
+
+func add_loading():
+	loading = loadScene.instantiate()
+	get_tree().current_scene.add_child(loading)
+
+func clear_loading():
+	if loading:
+		loading.queue_free()
+		loading = null

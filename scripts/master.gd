@@ -47,6 +47,7 @@ func check_round_beaten() -> void:
 
 func win_round():
 	print("Round "+str(Global.current_round)+" has been beaten!")
+	Global.doLog()
 	if Global.current_round == rounds.back().get("number"):
 		get_tree().change_scene_to_file('res://scenes/game_beaten.tscn')
 		Global.current_round = 0

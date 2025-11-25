@@ -4,23 +4,28 @@ import torch
 import websockets
 from dataset import GameDataset
 from torch.utils.data import DataLoader
+from model import PlayerModel
 import torch.nn as nn
+
+training_lock = asyncio.Lock()
 
 model = torch.jit.load("player_model_ts.pt")
 model.eval()
 
 BATCH_SIZE = 64
-EPOCHS = 500
+EPOCHS = 1000
 MAX_PROJECTILES = 20
 LR = 1e-3
+# The number of frames between successive predicted positions
 K = 10
+# Number of positions to predict
 N = 3
 
 loss_fn = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=LR)
 
 device = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else "cpu"
-print(f"[ML] Using {device} device")
+print(f"Using {device} device")
 
 def train_model(log_path, progress_callback):
       dataset = GameDataset(log_path, N, K, MAX_PROJECTILES)
@@ -54,8 +59,13 @@ def train_model(log_path, progress_callback):
 
       print("Saved TorchScript model to player_model_ts.pt")
 
-async def start_train(ws, data):
+async def start_train(ws, data, loop):
       log_path = data["log_path"]
+
+      await ws.send(json.dumps({
+           "type": "train_start",
+           "max_epoch": EPOCHS
+      }))
 
       def progress(epoch, loss):
             asyncio.run_coroutine_threadsafe(
@@ -64,13 +74,21 @@ async def start_train(ws, data):
                   "epoch": epoch,
                   "loss": loss
             })), 
-            asyncio.get_event_loop()
+            loop
       )
             
       await asyncio.to_thread(train_model, log_path, progress)
 
-async def handle_connection(ws):
+      await ws.send(json.dumps({
+           "type": "train_complete"
+      }))
+
+async def handle_connection(ws, loop):
       print("Client connected!")
+
+      await ws.send(json.dumps({
+            "type": "connection_success"
+      }))
 
       try:
         async for message in ws:
@@ -91,11 +109,18 @@ async def handle_connection(ws):
             packet_type = data["type"]
 
             if packet_type == "train":
-                 print("Received train packet!")
-                 await start_train(ws, data)
+                  if training_lock.locked():
+                        await ws.send(json.dumps({"type": "error", "message": "Training already running"}))
+                  else:
+                        async with training_lock:
+                              await start_train(ws, data, loop)
             elif packet_type == "inference":
-                 print("Received inference packet!")
                  await inference(ws, data)
+            elif packet_type == "reset":
+                  if training_lock.locked():
+                        await ws.send(json.dumps({"type": "error", "message": "Cannot reset during training"}))
+                  else:
+                        await reset(ws)
             else:
                  print("Received unknown packet type: ", packet_type)
 
@@ -103,7 +128,13 @@ async def handle_connection(ws):
             print("Client disconnected")
 
 async def main():
-      async with websockets.serve(handle_connection, "localhost", 8766):
+      loop = asyncio.get_running_loop()
+
+      async with websockets.serve(
+           lambda ws: handle_connection(ws, loop),
+           "localhost",
+           8766
+      ):
             print("Server running on ws://localhost:8766")
             await asyncio.Future()
 
@@ -126,6 +157,19 @@ async def inference(ws, data):
       await ws.send(json.dumps({
            "type": "prediction",
            "prediction": pred
+      }))
+
+async def reset(ws):
+      print("Resetting!")
+      global model, optimizer
+
+      model = PlayerModel(N, MAX_PROJECTILES)
+      model.eval()
+
+      optimizer = torch.optim.Adam(model.parameters(), lr=LR)
+
+      await ws.send(json.dumps({
+            "type": "reset"
       }))
 
 asyncio.run(main())
