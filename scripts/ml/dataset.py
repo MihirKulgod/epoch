@@ -2,17 +2,22 @@ import numpy as np
 import torch
 from torch.utils.data import Dataset
 
-MAX_PROJ = 20
-
 def load_data(path):
       import json
       frames = []
       with open(path) as f:
             for line in f:
-                  frames.append(json.loads(line))
+                  line = line.strip()
+                  if not line:
+                        continue
+                  try:
+                        frames.append(json.loads(line))
+                  except json.JSONDecodeError as e:
+                        print("Bad log line: ", line)
+                        continue
       return frames
 
-def make_samples(frames, N, K, maxProjectiles):
+def make_samples(frames, N, K, maxEnemies, maxProjectiles):
       inputs = []
       targets = []
 
@@ -23,8 +28,9 @@ def make_samples(frames, N, K, maxProjectiles):
             f0 = frames[i]
 
             player = np.array(f0["player"], dtype=np.float32)
-            proj = pad_projectiles(f0["projectiles"], maxProjectiles)
-            input_vec = np.concatenate([player, proj])
+            enemies = pad(f0["enemies"], maxEnemies)
+            projectiles = pad(f0["projectiles"], maxProjectiles)
+            input_vec = np.concatenate([player, enemies, projectiles])
 
             future_positions = []
 
@@ -45,7 +51,7 @@ def make_samples(frames, N, K, maxProjectiles):
 
 
 
-def pad_projectiles(projectiles, max_no_projectiles):
+def pad(projectiles, max_no_projectiles):
       arr = np.zeros((max_no_projectiles, 4), dtype=np.float32)
       for i in range(len(projectiles)):
             if i >= max_no_projectiles:
@@ -54,9 +60,9 @@ def pad_projectiles(projectiles, max_no_projectiles):
       return arr.flatten()
 
 class GameDataset(Dataset):
-      def __init__(self, log_path, n=5, k=10, max_projectiles=20):
+      def __init__(self, log_path, n=5, k=10, max_enemies=16, max_projectiles=24):
             frames = load_data(log_path)
-            self.X, self.Y = make_samples(frames, n, k, max_projectiles)
+            self.X, self.Y = make_samples(frames, n, k, max_enemies, max_projectiles)
 
       def __len__(self):
             return len(self.X)

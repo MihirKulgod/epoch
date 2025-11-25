@@ -3,15 +3,30 @@ extends RichTextLabel
 var phase := 0
 # 0 Not started, 1 started, 2 ended
 
-func _process(_delta: float) -> void:
+@export var addDot := 0.6
+
+var timer := 0.0
+var dots := 1
+
+var label := "Waiting to start training"
+
+func _process(delta: float) -> void:
 	phase = 0 if not Global.trainingStarted else 1
 	if Global.trainingEnded:
 		phase = 2
 	
+	timer += delta
+	if timer >= addDot:
+		timer = 0
+		dots += 1
+		if dots > 3:
+			dots = 1
+	
 	match phase:
 		0:
-			text = "Waiting to start training.."
+			label = "Waiting to start training" + ".".repeat(dots)
 		1:
-			text = "Training.. "
+			label = "Training" + ".".repeat(dots)
 		2:
-			text = "Training complete! Final Loss = "+str(round(Global.loss*10)/10.0)
+			label = "Training complete! Final Loss = "+str(round(Global.loss*10)/10.0)
+	text = label

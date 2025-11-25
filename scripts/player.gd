@@ -5,6 +5,8 @@ class_name Player
 @onready var anim := $AnimatedSprite2D
 @onready var afterimage := preload("res://scenes/after_image.tscn")
 
+var speed := 60.0
+
 var aiTimer := 0.0
 var aiInterval := 0.05
 
@@ -63,7 +65,7 @@ func _physics_process(delta: float) -> void:
 		dashTime = 0.15
 		dashVec = Vector2(x, y)
 	
-	var s := 80
+	var s := speed
 	
 	if dashTime > 0:
 		dashTime -= delta

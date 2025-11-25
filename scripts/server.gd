@@ -39,13 +39,17 @@ func request_reset():
 	await self.reset_complete
 
 func request_inference():
-	if not Logger_.last_player_state or not Logger_.last_projectile_list:
+	if not Logger_.last_enemy_list:
 		return
 	socket.send_text(JSON.stringify({
 		"type": "inference",
 		"player": Logger_.last_player_state,
+		"enemies": Logger_.last_enemy_list,
 		"projectiles": Logger_.last_projectile_list
 	}))
+	
+	if get_tree().get_first_node_in_group("record"):
+		get_tree().get_first_node_in_group("record")._show()
 
 func request_train():
 	socket.send_text(JSON.stringify({
@@ -94,11 +98,11 @@ func received_start(data : Dictionary):
 	Global.trainingStarted = true
 
 func received_progress(data : Dictionary):
-	print("Received progress packet!")
 	Global.epoch = data.get("epoch", -1)
 	Global.loss = data.get("loss", -1)
 
 func received_prediction(data : Dictionary):
-	print("Received prediction packet!")
+	if Global.current_round == 0:
+		return
 	var arr = data["prediction"]
 	Global.futurePlayerPositions = arr

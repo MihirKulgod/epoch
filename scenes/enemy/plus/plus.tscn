@@ -57,13 +57,13 @@ animations = [{
 }],
 "loop": true,
 "name": &"default",
-"speed": 10.0
+"speed": 6.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rkx42"]
 size = Vector2(10, 10)
 
-[node name="Dart" type="RigidBody2D" groups=["enemy"]]
+[node name="Plus" type="RigidBody2D" groups=["enemy"]]
 collision_layer = 2
 collision_mask = 128
 physics_material_override = SubResource("PhysicsMaterial_880sh")
@@ -73,8 +73,7 @@ script = ExtResource("1_8y5hl")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_cq6ho")
 autoplay = "default"
-frame = 7
-frame_progress = 0.29347575
+frame_progress = 0.70256287
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_rkx42")

@@ -9,7 +9,8 @@ import sys
 log_path = sys.argv[1]
 
 # Max no. of projectiles to take into account
-MAX_PROJECTILES = 20
+MAX_PROJECTILES = 30
+MAX_ENEMIES = 16
 
 # The number of frames between successive predicted positions
 K = 10
@@ -18,13 +19,13 @@ N = 3
 
 # TRAINING SETUP
 batch_size = 64
-epochs = 500
+epochs = 80
 learning_rate = 1e-3
 
 # -----------------
 
-dataset = GameDataset(log_path, N, K, MAX_PROJECTILES)
-model = PlayerModel(N, MAX_PROJECTILES)
+dataset = GameDataset(log_path, N, K, MAX_ENEMIES, MAX_PROJECTILES)
+model = PlayerModel(N, MAX_ENEMIES, MAX_PROJECTILES)
 
 loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
 
@@ -32,7 +33,7 @@ loss_fn = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
 device = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else "cpu"
-print(f"[ML] Using {device} device")
+print(f"Using {device} device")
 
 print("Starting training...")
 
@@ -53,7 +54,7 @@ for epoch in range(epochs):
       avg_loss = total_loss / len(loader)
       print(f"Epoch {epoch+1}/{epochs}, Loss: {avg_loss:.6f}")
 
-example_input = torch.randn(1, (MAX_PROJECTILES + 1) * 4)
+example_input = torch.randn(1, (1 + MAX_ENEMIES + MAX_PROJECTILES) * 4)
 
 traced = torch.jit.trace(model, example_input)
 traced.save("player_model_ts.pt")

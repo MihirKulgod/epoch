@@ -2,7 +2,7 @@ extends Node
 
 class_name Master
 
-var round_override := 0
+var round_override := -1
 
 func _ready() -> void:
 	Global.master = self
@@ -21,8 +21,11 @@ func load_round():
 	for entry in entities:
 		Global.createAt(Entity.find(entry.get("name")), true_coords(entry.get("position")))
 	Global.roundRunning = true
+	Logger_.init()
 	
 func die() -> void:
+	if not Global.roundRunning:
+		return
 	Global.roundRunning = false
 	await Global.fade_out()
 	call_deferred("reload")
@@ -37,6 +40,8 @@ func true_coords(vec : Vector2):
 	return Vector2(vec.x * w, vec.y * h)
 
 func check_round_beaten() -> void:
+	if not Global.roundRunning:
+		return
 	for enemy in get_tree().get_nodes_in_group("enemy"):
 		if not enemy.is_queued_for_deletion():
 			return
@@ -75,8 +80,10 @@ var rounds := [
 		0,
 		Vector2(0.5, 0.5),
 		[
-			new_entry("plus", Vector2(0.1, 0.1)),
+			new_entry("dart", Vector2(0.1, 0.1)),
 			new_entry("dart", Vector2(0.9, 0.1)),
+			new_entry("plus", Vector2(0.05, 0.95)),
+			new_entry("plus", Vector2(0.05, 0.05))
 		]
 	),
 	new_round(
@@ -85,22 +92,31 @@ var rounds := [
 		[
 			new_entry("dart", Vector2(0.1, 0.1)),
 			new_entry("dart", Vector2(0.9, 0.1)),
-			new_entry("arrow", Vector2(0.05, 0.05)),
-			new_entry("arrow", Vector2(0.95, 0.05)),
+			new_entry("dart", Vector2(0.1, 0.9)),
+			new_entry("dart", Vector2(0.9, 0.9)),
+			new_entry("dart", Vector2(0.1, 0.5)),
+			new_entry("dart", Vector2(0.9, 0.5)),
+			new_entry("plus", Vector2(0.95, 0.95)),
+			new_entry("plus", Vector2(0.95, 0.05))
 		]
 	),
 	new_round(
 		2,
-		Vector2(0.5, 0.5),
+		Vector2(0.05, 0.05),
 		[
-			new_entry("arrow", Vector2(0.05, 0.95)),
-			new_entry("arrow", Vector2(0.05, 0.05)),
 			new_entry("arrow", Vector2(0.95, 0.95)),
-			new_entry("arrow", Vector2(0.95, 0.05)),
-			new_entry("arrow", Vector2(0.95, 0.5)),
-			new_entry("arrow", Vector2(0.05, 0.5)),
-			new_entry("arrow", Vector2(0.5, 0.05)),
-			new_entry("arrow", Vector2(0.5, 0.95)),
+			new_entry("plus", Vector2(0.05, 0.95)),
+			new_entry("plus", Vector2(0.95, 0.05))
+		]
+	),
+	new_round(
+		3,
+		Vector2(0.5, 0.05),
+		[
+			new_entry("plus", Vector2(0.05, 0.95)),
+			new_entry("plus", Vector2(0.05, 0.05)),
+			new_entry("plus", Vector2(0.95, 0.95)),
+			new_entry("plus", Vector2(0.95, 0.05)),
 		]
 	),
 ]

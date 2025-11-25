@@ -3,45 +3,12 @@
 [ext_resource type="Script" uid="uid://c1o3yldu5frqp" path="res://scripts/scenes/win.gd" id="1_826fv"]
 [ext_resource type="Script" uid="uid://1d71t56g10xb" path="res://scripts/ui/switch_to_scene.gd" id="1_r4oei"]
 [ext_resource type="PackedScene" uid="uid://d2rigfsl3to6u" path="res://scenes/effects/cover.tscn" id="2_yxbqr"]
+[ext_resource type="Theme" uid="uid://ip3omcl1k1la" path="res://themes/main.tres" id="3_d70ak"]
 [ext_resource type="PackedScene" uid="uid://c1y7fvh4ncvja" path="res://scenes/main.tscn" id="3_iiocm"]
 [ext_resource type="Script" uid="uid://dln103kfkub5y" path="res://scripts/ui/display_round_number.gd" id="3_tylv2"]
 [ext_resource type="Script" uid="uid://dps3gu6se0ekd" path="res://scripts/ui/status.gd" id="4_5vxan"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_826fv"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.1, 0.1, 0.1, 0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_afbyi"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0, 0, 0, 0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r4oei"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.22, 0.22, 0.22, 0)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
+[ext_resource type="Texture2D" uid="uid://bceqapowoo6y3" path="res://textures/ui/progress-empty.png" id="7_531e2"]
+[ext_resource type="Texture2D" uid="uid://clbhinsdwfgax" path="res://textures/ui/progress_filled.png" id="8_d70ak"]
 
 [node name="Win" type="Node2D"]
 script = ExtResource("1_826fv")
@@ -71,8 +38,9 @@ offset_left = -150.0
 offset_right = 150.0
 offset_bottom = 50.0
 grow_horizontal = 2
-theme_override_font_sizes/normal_font_size = 24
-text = "ROUND BEATEN"
+theme = ExtResource("3_d70ak")
+theme_override_font_sizes/normal_font_size = 28
+text = "ROUND 0 BEATEN"
 fit_content = true
 scroll_active = false
 horizontal_alignment = 1
@@ -89,6 +57,7 @@ offset_left = -150.0
 offset_right = 150.0
 offset_bottom = 50.0
 grow_horizontal = 2
+theme = ExtResource("3_d70ak")
 theme_override_font_sizes/normal_font_size = 12
 text = "Waiting to start training.."
 fit_content = true
@@ -110,15 +79,30 @@ offset_right = 30.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.52150154, 0.96250135, 0.9435885, 1)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_color = Color(0.8086365, 0.99362665, 0.97493106, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.6755104, 0.9735165, 0.9603024, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_826fv")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_afbyi")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r4oei")
+theme = ExtResource("3_d70ak")
+disabled = true
 text = "Next Round"
 script = ExtResource("1_r4oei")
 scene = ExtResource("3_iiocm")
+
+[node name="TextureProgressBar" type="TextureProgressBar" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.83
+anchor_right = 0.5
+anchor_bottom = 0.83
+offset_left = -80.0
+offset_right = 80.0
+offset_bottom = 16.0
+grow_horizontal = 2
+grow_vertical = 2
+nine_patch_stretch = true
+stretch_margin_left = 2
+stretch_margin_top = 2
+stretch_margin_right = 2
+stretch_margin_bottom = 2
+texture_under = ExtResource("7_531e2")
+texture_progress = ExtResource("8_d70ak")
 
 [connection signal="pressed" from="Control/Button" to="Control/Button" method="_on_pressed"]

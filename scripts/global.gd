@@ -6,6 +6,8 @@ var pyPath = ProjectSettings.globalize_path("res://scripts/ml/")
 
 @onready var fadeScene := preload("res://scenes/effects/fading.tscn")
 @onready var loadScene := preload("res://scenes/ui/loading.tscn")
+@onready var settingsScene := preload("res://scenes/ui/settings.tscn")
+
 var blackout : Node = null
 var loading : Node = null
 
@@ -18,7 +20,8 @@ var master : Master = null
 
 var current_round := 0
 var roundRunning := false
-var target_future := false
+
+var target_future := true
 
 var loss := 0.0
 var epoch := 0
@@ -63,7 +66,15 @@ func _notification(what):
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
-		quit()
+		if not roundRunning:
+			return
+		if get_tree().get_first_node_in_group("settings"):
+			get_tree().get_first_node_in_group("settings").queue_free()
+			get_tree().paused = false
+			return
+		get_tree().paused = true
+		var s := settingsScene.instantiate()
+		get_tree().current_scene.add_child(s)
 		
 	if event.is_action_pressed("log"):
 		doLog()
@@ -76,7 +87,6 @@ func quit():
 	get_tree().quit()
 
 func doLog():
-	print("Logging..")
 	Logger_.finalize_log()
 	print("Log file saved to " + ProjectSettings.globalize_path(logPath))
 

@@ -4,13 +4,9 @@ extends RichTextLabel
 @export var addDot := 0.6
 
 var timer := 0.0
-
 var dots := 1
 
 func _process(delta: float) -> void:
-	if Server.connected:
-		$"..".queue_free()
-	
 	timer += delta
 	if timer >= addDot:
 		timer = 0

@@ -22,6 +22,7 @@ Logger_="*res://scripts/logger_.gd"
 Entity="*res://entity.gd"
 Data="*res://scripts/data.gd"
 Server="*res://scripts/server.gd"
+Settings="*res://scripts/settings.gd"
 
 [display]
 
@@ -38,6 +39,8 @@ projectile=""
 destroyable=""
 enemy=""
 cover=""
+record=""
+settings=""
 
 [input]
 

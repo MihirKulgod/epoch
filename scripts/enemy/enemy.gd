@@ -8,5 +8,5 @@ var explosion_scale := 1.0
 
 func explode():
 	Global.createAt(explosion, global_position)
-	await queue_free()
+	queue_free()
 	Global.master.call_deferred("check_round_beaten")

@@ -13,6 +13,8 @@ var aiming := Vector2.ZERO
 
 var flipDir := false
 
+var max_prediction_disp := 40.0
+
 func _physics_process(_delta: float) -> void:
 	var target := Global.player.global_position
 	var dp := target - global_position
@@ -20,7 +22,9 @@ func _physics_process(_delta: float) -> void:
 	if Global.target_future and Global.futurePlayerPositions:
 		var p = Global.futurePlayerPositions
 		var i = 0
-		target = Vector2(p[i], p[i+1])
+		var predicted := Vector2(p[i], p[i+1])
+		if (predicted - target).length() < max_prediction_disp:
+			target = predicted
 	
 	var d = target - global_position
 	

@@ -2,15 +2,16 @@ import torch
 import torch.nn as nn
 
 class PlayerModel(nn.Module):
-      def __init__(self, n, maxProj):
+      def __init__(self, n, maxEne, maxProj):
             super().__init__()
 
+            self.maxEne = maxEne
             self.maxProj = maxProj
             self.n = n
             hidden_dim = 256
 
             self.net = nn.Sequential(
-                  nn.Linear(4 * (1 + maxProj), 256),
+                  nn.Linear(4 * (1 + maxEne + maxProj), 256),
                   nn.ReLU(),
                   nn.LayerNorm(256),
 

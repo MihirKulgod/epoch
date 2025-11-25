@@ -4,6 +4,8 @@ func _process(_delta: float) -> void:
 	queue_redraw()
 
 func _draw():
+	if not Settings.settings["draw_future"]:
+		return
 	var o := 0.5
 	if Global.futurePlayerPositions:
 		var p = Global.futurePlayerPositions

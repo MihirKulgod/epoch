@@ -13,11 +13,12 @@ model = torch.jit.load("player_model_ts.pt")
 model.eval()
 
 BATCH_SIZE = 64
-EPOCHS = 1000
-MAX_PROJECTILES = 20
+EPOCHS = 200
+MAX_PROJECTILES = 50
+MAX_ENEMIES = 16
 LR = 1e-3
 # The number of frames between successive predicted positions
-K = 10
+K = 6
 # Number of positions to predict
 N = 3
 
@@ -28,7 +29,7 @@ device = torch.accelerator.current_accelerator().type if torch.accelerator.is_av
 print(f"Using {device} device")
 
 def train_model(log_path, progress_callback):
-      dataset = GameDataset(log_path, N, K, MAX_PROJECTILES)
+      dataset = GameDataset(log_path, N, K, MAX_ENEMIES, MAX_PROJECTILES)
       loader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
 
       print("Starting training...")
@@ -52,7 +53,7 @@ def train_model(log_path, progress_callback):
             print(f"Epoch {epoch+1}/{EPOCHS}, Loss: {avg_loss:.6f}")
 
       print("Training finished!")
-      example_input = torch.randn(1, (MAX_PROJECTILES + 1) * 4)
+      example_input = torch.randn(1, (1 + MAX_ENEMIES + MAX_PROJECTILES) * 4)
 
       traced = torch.jit.trace(model, example_input)
       traced.save("player_model_ts.pt")
@@ -141,13 +142,17 @@ async def main():
 async def inference(ws, data):
       player = data["player"]
       
+      enemies = data["enemies"][:MAX_ENEMIES]
+      while len(enemies) < MAX_ENEMIES:
+            enemies.append([0, 0, 0, 0])
+      ene_flat = [val for e in enemies for val in e]
+
       projectiles = data["projectiles"][:MAX_PROJECTILES]
       while len(projectiles) < MAX_PROJECTILES:
             projectiles.append([0, 0, 0, 0])
-
       proj_flat = [val for p in projectiles for val in p]
 
-      state = player + proj_flat
+      state = player + ene_flat + proj_flat
 
       x = torch.tensor(state, dtype=torch.float32).unsqueeze(0)
 
@@ -163,7 +168,7 @@ async def reset(ws):
       print("Resetting!")
       global model, optimizer
 
-      model = PlayerModel(N, MAX_PROJECTILES)
+      model = PlayerModel(N, MAX_ENEMIES, MAX_PROJECTILES)
       model.eval()
 
       optimizer = torch.optim.Adam(model.parameters(), lr=LR)

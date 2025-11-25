@@ -8,20 +8,23 @@ var frame_count := 0
 
 var last_player_state = null
 var last_projectile_list = null
+var last_enemy_list = null
 
-func _ready() -> void:
+func init() -> void:
 	file = FileAccess.open(temp_path, FileAccess.WRITE)
 	frame_count = 0
 
-func log_frame(player_state: Array, projectile_list: Array) -> void:
+func log_frame(player_state: Array, enemy_list: Array, projectile_list: Array) -> void:
 	var entry = {
 		"frame": frame_count,
 		"player": player_state,
+		"enemies": enemy_list,
 		"projectiles": projectile_list
 	}
 	last_player_state = player_state
+	last_enemy_list = enemy_list
 	last_projectile_list = projectile_list
-
+	
 	file.store_line(JSON.stringify(entry))
 	frame_count += 1
 

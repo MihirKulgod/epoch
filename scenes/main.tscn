@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c1y7fvh4ncvja"]
+[gd_scene load_steps=17 format=3 uid="uid://c1y7fvh4ncvja"]
 
 [ext_resource type="Script" uid="uid://cpsf46rwy8pfs" path="res://scripts/master.gd" id="1_choun"]
 [ext_resource type="Shader" uid="uid://do8oeqmdsiuhk" path="res://shaders/bg.gdshader" id="1_o6xl0"]
@@ -7,7 +7,10 @@
 [ext_resource type="Script" uid="uid://bbgii5361rosh" path="res://scripts/projectile_blocked_area.gd" id="3_sugp2"]
 [ext_resource type="Script" uid="uid://dy83wd5jnj6qp" path="res://scripts/obj_count.gd" id="4_jyhfs"]
 [ext_resource type="Script" uid="uid://lglrsgdvhmim" path="res://scripts/log.gd" id="5_tbgi4"]
+[ext_resource type="Theme" uid="uid://ip3omcl1k1la" path="res://themes/main.tres" id="5_ya4ey"]
 [ext_resource type="Script" uid="uid://dvslyb3b5nvme" path="res://scripts/player_ghost.gd" id="7_tipki"]
+[ext_resource type="Texture2D" uid="uid://bm0dli31ymxlc" path="res://textures/ui/record.png" id="9_choun"]
+[ext_resource type="Script" uid="uid://clxqtd53fnhv" path="res://scripts/ui/record.gd" id="10_ya4ey"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tipki"]
 shader = ExtResource("1_o6xl0")
@@ -96,9 +99,10 @@ offset_left = 252.0
 offset_top = 150.0
 offset_right = 292.0
 offset_bottom = 173.0
+theme = ExtResource("5_ya4ey")
 script = ExtResource("4_jyhfs")
 
-[node name="Log" type="Node" parent="."]
+[node name="Log" type="Node2D" parent="."]
 script = ExtResource("5_tbgi4")
 
 [node name="PlayerGhost" type="Sprite2D" parent="."]
@@ -110,5 +114,10 @@ script = ExtResource("7_tipki")
 
 [node name="Master" type="Node" parent="."]
 script = ExtResource("1_choun")
+
+[node name="Record" type="Sprite2D" parent="." groups=["record"]]
+position = Vector2(291, 174)
+texture = ExtResource("9_choun")
+script = ExtResource("10_ya4ey")
 
 [connection signal="body_entered" from="Border/Area2D" to="Border/Area2D" method="_on_body_entered"]

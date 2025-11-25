@@ -1,12 +1,14 @@
-[gd_scene load_steps=11 format=3 uid="uid://cictfc4ljrf4h"]
+[gd_scene load_steps=13 format=3 uid="uid://cictfc4ljrf4h"]
 
 [ext_resource type="Script" uid="uid://c1o3yldu5frqp" path="res://scripts/scenes/win.gd" id="1_8ln24"]
 [ext_resource type="PackedScene" uid="uid://d2rigfsl3to6u" path="res://scenes/effects/cover.tscn" id="2_rtw2f"]
+[ext_resource type="Theme" uid="uid://ip3omcl1k1la" path="res://themes/main.tres" id="3_jk1qb"]
 [ext_resource type="Script" uid="uid://1d71t56g10xb" path="res://scripts/ui/switch_to_scene.gd" id="3_oa1go"]
 [ext_resource type="PackedScene" uid="uid://c1y7fvh4ncvja" path="res://scenes/main.tscn" id="4_tbmy8"]
 [ext_resource type="Script" uid="uid://clmbu8p77nm8" path="res://scripts/ui/quit_game.gd" id="5_jk1qb"]
 [ext_resource type="Script" uid="uid://bpx0cjotvffol" path="res://scripts/ui/reset_and_new.gd" id="5_oa1go"]
 [ext_resource type="Script" uid="uid://dred6mv70ki5d" path="res://scripts/ui/dotdotdot.gd" id="6_rtw2f"]
+[ext_resource type="Script" uid="uid://dltnoyyodk1ya" path="res://scripts/ui/delete_on_connect.gd" id="7_tbmy8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_826fv"]
 content_margin_left = 4.0
@@ -73,7 +75,7 @@ offset_top = -1.0
 offset_right = 116.0
 offset_bottom = 49.0
 grow_horizontal = 2
-theme_override_font_sizes/normal_font_size = 24
+theme = ExtResource("3_jk1qb")
 text = "EPOCH"
 fit_content = true
 scroll_active = false
@@ -92,13 +94,7 @@ offset_right = 30.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.52150154, 0.96250135, 0.9435885, 1)
-theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
-theme_override_colors/font_hover_color = Color(0.8086365, 0.99362665, 0.97493106, 1)
-theme_override_colors/font_hover_pressed_color = Color(0.6755104, 0.9735165, 0.9603024, 1)
-theme_override_styles/normal = SubResource("StyleBoxFlat_826fv")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_afbyi")
-theme_override_styles/hover = SubResource("StyleBoxFlat_r4oei")
+theme = ExtResource("3_jk1qb")
 text = "Continue"
 script = ExtResource("3_oa1go")
 scene = ExtResource("4_tbmy8")
@@ -116,6 +112,7 @@ offset_right = 30.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("3_jk1qb")
 theme_override_colors/font_color = Color(0.52150154, 0.96250135, 0.9435885, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
 theme_override_colors/font_hover_color = Color(0.8086365, 0.99362665, 0.97493106, 1)
@@ -139,6 +136,7 @@ offset_right = 30.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("3_jk1qb")
 theme_override_colors/font_color = Color(0.52150154, 0.96250135, 0.9435885, 1)
 theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
 theme_override_colors/font_hover_color = Color(0.8086365, 0.99362665, 0.97493106, 1)
@@ -153,6 +151,7 @@ script = ExtResource("5_jk1qb")
 offset_right = 300.0
 offset_bottom = 180.0
 color = Color(0, 0, 0, 0.85490197)
+script = ExtResource("7_tbmy8")
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="ColorRect2"]
 layout_mode = 1
