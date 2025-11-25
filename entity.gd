@@ -3,7 +3,8 @@ extends Node
 var entities := {
 	"player": preload("res://scenes/player.tscn"),
 	"dart": preload("res://scenes/enemy/dart/dart.tscn"),
-	"arrow": preload("res://scenes/enemy/arrow/arrow.tscn")
+	"arrow": preload("res://scenes/enemy/arrow/arrow.tscn"),
+	"plus": preload("res://scenes/enemy/plus/plus.tscn")
 }
 
 func find(_name : String) -> Resource:

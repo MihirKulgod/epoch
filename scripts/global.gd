@@ -9,13 +9,14 @@ var blackout : Node = null
 
 var futurePlayerPositions := []
 
-var serverRunning := false
 var processID := -1
 
 var player : Player = null
 var master : Master = null
 
 var current_round := 0
+var roundRunning := false
+var target_future := false
 
 func _ready():
 	var thread := Thread.new()
@@ -28,23 +29,14 @@ func _ready():
 	print("Round loaded as "+str(current_round))
 	
 func start_server_thread():
-	serverRunning = true
-	#var output := []
 	processID = OS.create_process(
 		exePath,
 		[pyPath + "server.py"],
-		false
+		true
 	)
-
-	#print("Python server exited with code: ", exit_code)
-	#print("--- Python Output ---")
-	#for line in output:
-		#print(line)
-	serverRunning = false
 
 func shutdown_server():
 	print("Shutting down python server..")
-	print("Is server still running? The answer is "+str(serverRunning))
 	
 	if processID < 0:
 		print("server.py ended, process id " + str(processID))

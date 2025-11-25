@@ -2,8 +2,12 @@ extends Node
 
 class_name Master
 
+var round_override := 0
+
 func _ready() -> void:
 	Global.master = self
+	if round_override > -1:
+		Global.current_round = round_override
 	Global.fade_in()
 	call_deferred("load_round")
 	
@@ -16,13 +20,16 @@ func load_round():
 	var entities : Array = r.get("entities")
 	for entry in entities:
 		Global.createAt(Entity.find(entry.get("name")), true_coords(entry.get("position")))
+	Global.roundRunning = true
 	
 func die() -> void:
+	Global.roundRunning = false
 	await Global.fade_out()
 	call_deferred("reload")
 
 func reload():
 	var result = get_tree().reload_current_scene()
+	print("Reloaded current scene with code "+str(result))
 
 func true_coords(vec : Vector2):
 	var w = ProjectSettings.get_setting("display/window/size/viewport_width")
@@ -33,6 +40,7 @@ func check_round_beaten() -> void:
 	for enemy in get_tree().get_nodes_in_group("enemy"):
 		if not enemy.is_queued_for_deletion():
 			return
+	Global.roundRunning = false
 	await get_tree().create_timer(1).timeout
 	await Global.fade_out()
 	call_deferred("win_round")
@@ -66,7 +74,7 @@ var rounds := [
 		0,
 		Vector2(0.5, 0.5),
 		[
-			new_entry("dart", Vector2(0.1, 0.1)),
+			new_entry("plus", Vector2(0.1, 0.1)),
 			new_entry("dart", Vector2(0.9, 0.1)),
 		]
 	),

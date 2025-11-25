@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Future Rogue"
-run/main_scene="uid://c1y7fvh4ncvja"
+run/main_scene="uid://cictfc4ljrf4h"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -21,6 +21,7 @@ Global="*res://scripts/global.gd"
 Logger_="*res://scripts/logger_.gd"
 Entity="*res://entity.gd"
 Data="*res://scripts/data.gd"
+Server="*res://scripts/server.gd"
 
 [display]
 

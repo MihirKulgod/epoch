@@ -17,10 +17,10 @@ func _physics_process(_delta: float) -> void:
 	var target := Global.player.global_position
 	var dp := target - global_position
 	
-	if Global.futurePlayerPositions:
+	if Global.target_future and Global.futurePlayerPositions:
 		var p = Global.futurePlayerPositions
 		var i = 0
-		#target = Vector2(p[i], p[i+1])
+		target = Vector2(p[i], p[i+1])
 	
 	var d = target - global_position
 	
