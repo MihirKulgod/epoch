@@ -1,10 +1,49 @@
-[gd_resource type="Theme" load_steps=16 format=3 uid="uid://ip3omcl1k1la"]
+[gd_resource type="Theme" load_steps=22 format=3 uid="uid://ip3omcl1k1la"]
 
 [ext_resource type="FontFile" uid="uid://251or41d24my" path="res://fonts/Misto.otf" id="1_0avsd"]
 [ext_resource type="FontFile" uid="uid://dwo453ej7w42t" path="res://fonts/Disket-Mono-Bold.ttf" id="2_78ekx"]
 [ext_resource type="FontFile" uid="uid://bknvgcrc82kw8" path="res://fonts/Disket-Mono-Regular.ttf" id="3_wc0q8"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_wykhr"]
+
+[sub_resource type="DPITexture" id="DPITexture_78ekx"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"#fefefe\" fill-opacity=\".75\"/></svg>
+"
+base_scale = 0.2
+
+[sub_resource type="DPITexture" id="DPITexture_wc0q8"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"16\" height=\"16\"><circle cx=\"8\" cy=\"8\" r=\"7\" fill=\"#fefefe\" fill-opacity=\".37\"/></svg>
+"
+base_scale = 0.2
+
+[sub_resource type="DPITexture" id="DPITexture_k5u3e"]
+_source = "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"4\" height=\"8\"><path fill=\"#fff\" fill-opacity=\".25\" d=\"M1 0h2v16H1z\"/></svg>
+"
+base_scale = 0.05
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wc0q8"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(1, 1, 1, 0.13333334)
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7d6gw"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.11119685, 0.11119684, 0.11119684, 1)
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_k5u3e"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.11119685, 0.11119684, 0.11119684, 1)
+corner_detail = 6
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_78ekx"]
 
@@ -69,8 +108,18 @@ Button/styles/normal = SubResource("StyleBoxEmpty_wykhr")
 Button/styles/normal_mirrored = SubResource("StyleBoxEmpty_wykhr")
 Button/styles/pressed = SubResource("StyleBoxEmpty_wykhr")
 Button/styles/pressed_mirrored = SubResource("StyleBoxEmpty_wykhr")
+HSlider/constants/center_grabber = 0
+HSlider/constants/grabber_offset = 0
+HSlider/constants/tick_offset = 0
+HSlider/icons/grabber = SubResource("DPITexture_78ekx")
+HSlider/icons/grabber_disabled = SubResource("DPITexture_wc0q8")
+HSlider/icons/grabber_highlight = SubResource("DPITexture_78ekx")
+HSlider/icons/tick = SubResource("DPITexture_k5u3e")
+HSlider/styles/grabber_area = SubResource("StyleBoxFlat_wc0q8")
+HSlider/styles/grabber_area_highlight = SubResource("StyleBoxFlat_7d6gw")
+HSlider/styles/slider = SubResource("StyleBoxFlat_k5u3e")
 ItemList/colors/font_color = Color(0.34407586, 0.34407574, 0.3440756, 1)
-ItemList/colors/font_hovered_color = Color(0.95, 0.95, 0.95, 1)
+ItemList/colors/font_hovered_color = Color(0.34509805, 0.34509805, 0.34509805, 1)
 ItemList/colors/font_hovered_selected_color = Color(1, 1, 1, 1)
 ItemList/colors/font_outline_color = Color(0, 0, 0, 1)
 ItemList/colors/font_selected_color = Color(1, 1, 1, 1)

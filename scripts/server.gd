@@ -102,7 +102,5 @@ func received_progress(data : Dictionary):
 	Global.loss = data.get("loss", -1)
 
 func received_prediction(data : Dictionary):
-	if Global.current_round == 0:
-		return
 	var arr = data["prediction"]
 	Global.futurePlayerPositions = arr

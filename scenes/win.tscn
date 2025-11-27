@@ -1,14 +1,16 @@
-[gd_scene load_steps=10 format=3 uid="uid://bd204h6wi8eid"]
+[gd_scene load_steps=12 format=3 uid="uid://bd204h6wi8eid"]
 
 [ext_resource type="Script" uid="uid://c1o3yldu5frqp" path="res://scripts/scenes/win.gd" id="1_826fv"]
-[ext_resource type="Script" uid="uid://1d71t56g10xb" path="res://scripts/ui/switch_to_scene.gd" id="1_r4oei"]
 [ext_resource type="PackedScene" uid="uid://d2rigfsl3to6u" path="res://scenes/effects/cover.tscn" id="2_yxbqr"]
 [ext_resource type="Theme" uid="uid://ip3omcl1k1la" path="res://themes/main.tres" id="3_d70ak"]
 [ext_resource type="PackedScene" uid="uid://c1y7fvh4ncvja" path="res://scenes/main.tscn" id="3_iiocm"]
 [ext_resource type="Script" uid="uid://dln103kfkub5y" path="res://scripts/ui/display_round_number.gd" id="3_tylv2"]
 [ext_resource type="Script" uid="uid://dps3gu6se0ekd" path="res://scripts/ui/status.gd" id="4_5vxan"]
+[ext_resource type="Script" uid="uid://ce3aws5u6vlug" path="res://scripts/ui/next_round.gd" id="6_531e2"]
 [ext_resource type="Texture2D" uid="uid://bceqapowoo6y3" path="res://textures/ui/progress-empty.png" id="7_531e2"]
 [ext_resource type="Texture2D" uid="uid://clbhinsdwfgax" path="res://textures/ui/progress_filled.png" id="8_d70ak"]
+[ext_resource type="PackedScene" uid="uid://cbx6xe5j8b0dy" path="res://scenes/ui/button_click.tscn" id="10_woh6y"]
+[ext_resource type="AudioStream" uid="uid://djms82n2cteqx" path="res://sounds/ui/training-complete.wav" id="11_rx2gv"]
 
 [node name="Win" type="Node2D"]
 script = ExtResource("1_826fv")
@@ -47,6 +49,7 @@ horizontal_alignment = 1
 script = ExtResource("3_tylv2")
 
 [node name="Status" type="RichTextLabel" parent="Control"]
+process_mode = 3
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
@@ -82,7 +85,7 @@ grow_vertical = 2
 theme = ExtResource("3_d70ak")
 disabled = true
 text = "Next Round"
-script = ExtResource("1_r4oei")
+script = ExtResource("6_531e2")
 scene = ExtResource("3_iiocm")
 
 [node name="TextureProgressBar" type="TextureProgressBar" parent="Control"]
@@ -104,5 +107,12 @@ stretch_margin_right = 2
 stretch_margin_bottom = 2
 texture_under = ExtResource("7_531e2")
 texture_progress = ExtResource("8_d70ak")
+
+[node name="ButtonClick" parent="." instance=ExtResource("10_woh6y")]
+
+[node name="Complete" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = ExtResource("11_rx2gv")
+pitch_scale = 1.5
 
 [connection signal="pressed" from="Control/Button" to="Control/Button" method="_on_pressed"]

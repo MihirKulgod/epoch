@@ -1,9 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://md0g04hn6162"]
+[gd_scene load_steps=19 format=3 uid="uid://md0g04hn6162"]
 
 [ext_resource type="Shader" uid="uid://b0yy5uftfd8hh" path="res://shaders/dash.gdshader" id="1_dqkch"]
 [ext_resource type="Script" uid="uid://xn3oan58kg5r" path="res://scripts/player.gd" id="1_g2els"]
 [ext_resource type="Texture2D" uid="uid://brl1l5p2lflv2" path="res://textures/player/player.png" id="2_g2els"]
 [ext_resource type="Texture2D" uid="uid://dkhh48no80o0k" path="res://textures/light.png" id="3_qhqgy"]
+[ext_resource type="AudioStream" uid="uid://2sm2psxa7uw0" path="res://sounds/player/die.wav" id="5_tuyoq"]
+[ext_resource type="AudioStream" uid="uid://0vp08ig7pryt" path="res://sounds/player/dash.wav" id="6_fjrip"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dqkch"]
 shader = ExtResource("1_dqkch")
@@ -79,9 +81,6 @@ size = Vector2(16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qhqgy"]
 size = Vector2(16, 16)
 
-[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_qhqgy"]
-polygon = PackedVector2Array(8, -8, 8, 8, -8, 8, -8, -8)
-
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 scale = Vector2(0.625, 0.625)
 collision_mask = 129
@@ -114,8 +113,13 @@ collision_mask = 6
 visible = false
 shape = SubResource("RectangleShape2D_qhqgy")
 
-[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
-visible = false
-occluder = SubResource("OccluderPolygon2D_qhqgy")
+[node name="DieSound" type="AudioStreamPlayer2D" parent="."]
+process_mode = 3
+stream = ExtResource("5_tuyoq")
+attenuation = 0.0001
+
+[node name="DashSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_fjrip")
+attenuation = 0.0001
 
 [connection signal="body_entered" from="Hurtbox" to="." method="hurt"]

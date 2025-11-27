@@ -1,6 +1,7 @@
 extends Node
 
 var logPath := "user://run_log.jsonl"
+var roundsPath := "res://rounds.jsonl"
 var exePath = ProjectSettings.globalize_path("res://ml_env/Scripts/python.exe")
 var pyPath = ProjectSettings.globalize_path("res://scripts/ml/")
 
@@ -17,6 +18,7 @@ var processID := -1
 
 var player : Player = null
 var master : Master = null
+var camera : Camera = null
 
 var current_round := 0
 var roundRunning := false
@@ -37,7 +39,6 @@ func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	
 	current_round = Data.load_round()
-	print("Round loaded as "+str(current_round))
 	
 func start_server_thread():
 	processID = OS.create_process(
@@ -47,22 +48,23 @@ func start_server_thread():
 	)
 
 func shutdown_server():
-	print("Shutting down python server..")
-	
 	if processID < 0:
 		print("server.py ended, process id " + str(processID))
 		return
 	
 	OS.kill(processID)
 	
-	#OS.execute("taskkill", ["/F", "/IM", "python.exe"])
+	# Force close python execution
+	# OS.execute("taskkill", ["/F", "/IM", "python.exe"])
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		shutdown_server()
 		
-		print("Round saved as "+str(current_round))
 		Data.save_round(current_round)
+		
+		for audio_source in get_tree().get_nodes_in_group("audio"):
+			audio_source.stop()
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
@@ -75,12 +77,8 @@ func _input(event):
 		get_tree().paused = true
 		var s := settingsScene.instantiate()
 		get_tree().current_scene.add_child(s)
-		
-	if event.is_action_pressed("log"):
-		doLog()
-	
-	if event.is_action_pressed("train"):
-		train()
+	if event.is_action_pressed("debug_force_quit"):
+		quit()
 
 func quit():
 	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
@@ -88,28 +86,6 @@ func quit():
 
 func doLog():
 	Logger_.finalize_log()
-	print("Log file saved to " + ProjectSettings.globalize_path(logPath))
-
-func train():
-	printerr("Old train function called in Global!")
-	quit()
-	
-	var path = ProjectSettings.globalize_path(logPath)
-
-	print("Starting training for: ", path)
-	
-	var output := []
-	var exit_code := OS.execute(
-		exePath,
-		[pyPath + "train.py", path],
-		output,
-		true
-	)
-
-	print("Python training exited with code: ", exit_code)
-	print("--- Python Output ---")
-	for line in output:
-		print(line)
 
 func sign(expr := true) -> int:
 	return 1 if expr else -1
@@ -161,3 +137,19 @@ func clear_loading():
 	if loading:
 		loading.queue_free()
 		loading = null
+
+func get_predicted(i: int) -> Vector2:
+	if i >= len(futurePlayerPositions) / 2:
+		return Vector2(-100, -100)
+	var j = i*2
+	return Vector2(futurePlayerPositions[j], futurePlayerPositions[j+1])
+
+func true_coords(vec : Vector2):
+	var w = ProjectSettings.get_setting("display/window/size/viewport_width")
+	var h = ProjectSettings.get_setting("display/window/size/viewport_height")
+	return Vector2(vec.x * w, vec.y * h)
+
+func false_coords(vec : Vector2):
+	var w = ProjectSettings.get_setting("display/window/size/viewport_width")
+	var h = ProjectSettings.get_setting("display/window/size/viewport_height")
+	return Vector2(vec.x / w, vec.y / h)

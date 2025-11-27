@@ -7,13 +7,19 @@ from torch.utils.data import DataLoader
 from model import PlayerModel
 import torch.nn as nn
 
+print(torch.__version__)
+print(torch.version.cuda)
+print(torch.cuda.is_available())
+
 training_lock = asyncio.Lock()
 
-model = torch.jit.load("player_model_ts.pt")
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+model = torch.jit.load("player_model_ts.pt").to(device)
 model.eval()
 
 BATCH_SIZE = 64
-EPOCHS = 200
+EPOCHS = 300
 MAX_PROJECTILES = 50
 MAX_ENEMIES = 16
 LR = 1e-3
@@ -24,8 +30,6 @@ N = 3
 
 loss_fn = nn.MSELoss()
 optimizer = torch.optim.Adam(model.parameters(), lr=LR)
-
-device = torch.accelerator.current_accelerator().type if torch.accelerator.is_available() else "cpu"
 print(f"Using {device} device")
 
 def train_model(log_path, progress_callback):
@@ -38,6 +42,9 @@ def train_model(log_path, progress_callback):
             total_loss = 0.0
 
             for batch_x, batch_y in loader:
+                  batch_x = batch_x.to(device)
+                  batch_y = batch_y.to(device)
+
                   pred = model(batch_x)
 
                   loss = loss_fn(pred, batch_y)
@@ -154,7 +161,7 @@ async def inference(ws, data):
 
       state = player + ene_flat + proj_flat
 
-      x = torch.tensor(state, dtype=torch.float32).unsqueeze(0)
+      x = torch.tensor(state, dtype=torch.float32).unsqueeze(0).to(device)
 
       with torch.no_grad():
             pred = model(x).squeeze().tolist()
@@ -168,7 +175,7 @@ async def reset(ws):
       print("Resetting!")
       global model, optimizer
 
-      model = PlayerModel(N, MAX_ENEMIES, MAX_PROJECTILES)
+      model = PlayerModel(N, MAX_ENEMIES, MAX_PROJECTILES).to(device)
       model.eval()
 
       optimizer = torch.optim.Adam(model.parameters(), lr=LR)

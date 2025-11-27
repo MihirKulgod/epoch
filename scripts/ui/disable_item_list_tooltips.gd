@@ -13,6 +13,7 @@ func _ready() -> void:
 			select(i, false)
 
 func _on_item_clicked(index: int, _at_position: Vector2, _mouse_button_index: int) -> void:
+	$Click.play()
 	match index:
 		0:
 			Settings.toggle("draw_future")

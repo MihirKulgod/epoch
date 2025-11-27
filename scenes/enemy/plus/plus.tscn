@@ -1,8 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://c5h76xft6753b"]
+[gd_scene load_steps=20 format=3 uid="uid://c5h76xft6753b"]
 
 [ext_resource type="Script" uid="uid://g2god48iy4a2" path="res://scripts/enemy/plus/plus.gd" id="1_8y5hl"]
 [ext_resource type="Texture2D" uid="uid://ciby07mg71hhq" path="res://textures/enemy/plus/plus.png" id="2_8y5hl"]
+[ext_resource type="Texture2D" uid="uid://binhpdwasqpym" path="res://textures/enemy/plus/plus_rage.png" id="3_2wf4p"]
 [ext_resource type="Texture2D" uid="uid://dkhh48no80o0k" path="res://textures/light.png" id="3_v652l"]
+[ext_resource type="AudioStream" uid="uid://cmukkxxg3ixgl" path="res://sounds/enemy/plus/shoot.wav" id="5_ddgjv"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_880sh"]
 friction = 0.0
@@ -26,6 +28,26 @@ region = Rect2(36, 0, 12, 12)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cm3c2"]
 atlas = ExtResource("2_8y5hl")
+region = Rect2(48, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_grfi2"]
+atlas = ExtResource("3_2wf4p")
+region = Rect2(0, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i554j"]
+atlas = ExtResource("3_2wf4p")
+region = Rect2(12, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y3jwa"]
+atlas = ExtResource("3_2wf4p")
+region = Rect2(24, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lcms0"]
+atlas = ExtResource("3_2wf4p")
+region = Rect2(36, 0, 12, 12)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dcjyu"]
+atlas = ExtResource("3_2wf4p")
 region = Rect2(48, 0, 12, 12)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cq6ho"]
@@ -58,10 +80,44 @@ animations = [{
 "loop": true,
 "name": &"default",
 "speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_grfi2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i554j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y3jwa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lcms0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dcjyu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lcms0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y3jwa")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i554j")
+}],
+"loop": true,
+"name": &"enraged",
+"speed": 28.0
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rkx42"]
 size = Vector2(10, 10)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_x5wqo"]
+random_pitch = 1.01
+streams_count = 1
+stream_0/stream = ExtResource("5_ddgjv")
 
 [node name="Plus" type="RigidBody2D" groups=["enemy"]]
 collision_layer = 2
@@ -73,7 +129,7 @@ script = ExtResource("1_8y5hl")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_cq6ho")
 autoplay = "default"
-frame_progress = 0.70256287
+frame_progress = 0.5019073
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_rkx42")
@@ -84,4 +140,15 @@ energy = 0.0
 texture = ExtResource("3_v652l")
 texture_scale = 0.05
 
+[node name="Enrage" type="Timer" parent="."]
+wait_time = 4096.0
+one_shot = true
+
+[node name="Shoot" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_x5wqo")
+volume_db = -3.0
+attenuation = 0.001
+max_polyphony = 8
+
 [connection signal="frame_changed" from="AnimatedSprite2D" to="." method="anim_frame_changed"]
+[connection signal="timeout" from="Enrage" to="." method="end_rage"]

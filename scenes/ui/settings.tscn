@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://co51afmxeulf2"]
+[gd_scene load_steps=9 format=3 uid="uid://co51afmxeulf2"]
 
 [ext_resource type="Theme" uid="uid://ip3omcl1k1la" path="res://themes/main.tres" id="1_8wfqe"]
 [ext_resource type="Theme" uid="uid://q2vfum12fmpd" path="res://themes/menu.tres" id="1_h175o"]
 [ext_resource type="Script" uid="uid://bltpk0n8qmelk" path="res://scripts/ui/disable_item_list_tooltips.gd" id="2_7pacj"]
 [ext_resource type="Script" uid="uid://c5qm32r4k7h22" path="res://scripts/ui/close_settings.gd" id="2_ptynm"]
+[ext_resource type="Script" uid="uid://8ecdnjh6edo4" path="res://scripts/ui/volume_slider.gd" id="4_jw8st"]
 [ext_resource type="Script" uid="uid://clmbu8p77nm8" path="res://scripts/ui/quit_game.gd" id="5_ncfhn"]
+[ext_resource type="AudioStream" uid="uid://b5lmoamr2cxhr" path="res://sounds/ui/setting.wav" id="5_ob3hf"]
+[ext_resource type="PackedScene" uid="uid://cbx6xe5j8b0dy" path="res://scenes/ui/button_click.tscn" id="7_4xk3x"]
 
 [node name="Settings" type="Node2D" groups=["settings"]]
 process_mode = 3
@@ -58,6 +61,24 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
+[node name="Volume" type="VBoxContainer" parent="ColorRect/Control/Categories"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="ColorRect/Control/Categories/Volume"]
+layout_mode = 2
+theme = ExtResource("1_8wfqe")
+text = "Volume"
+
+[node name="HSlider" type="HSlider" parent="ColorRect/Control/Categories/Volume"]
+layout_mode = 2
+size_flags_vertical = 1
+theme = ExtResource("1_8wfqe")
+max_value = 10.0
+rounded = true
+tick_count = 11
+ticks_on_borders = true
+script = ExtResource("4_jw8st")
+
 [node name="ItemList" type="ItemList" parent="ColorRect/Control/Categories"]
 layout_mode = 2
 theme = ExtResource("1_8wfqe")
@@ -70,6 +91,12 @@ item_0/text = "Show Predictions"
 item_1/text = "Debug Info"
 script = ExtResource("2_7pacj")
 
+[node name="Click" type="AudioStreamPlayer2D" parent="ColorRect/Control/Categories/ItemList"]
+process_mode = 3
+stream = ExtResource("5_ob3hf")
+pitch_scale = 1.76
+attenuation = 0.0001
+
 [node name="Button" type="Button" parent="ColorRect/Control/Categories"]
 layout_mode = 2
 theme = ExtResource("1_8wfqe")
@@ -77,6 +104,9 @@ theme_override_font_sizes/font_size = 8
 text = "Quit Game"
 script = ExtResource("5_ncfhn")
 
+[node name="ButtonClick" parent="." instance=ExtResource("7_4xk3x")]
+
 [connection signal="button_down" from="ColorRect/Control/Button" to="ColorRect/Control/Button" method="_on_button_down"]
+[connection signal="drag_ended" from="ColorRect/Control/Categories/Volume/HSlider" to="ColorRect/Control/Categories/Volume/HSlider" method="_on_drag_ended"]
 [connection signal="item_clicked" from="ColorRect/Control/Categories/ItemList" to="ColorRect/Control/Categories/ItemList" method="_on_item_clicked"]
 [connection signal="button_down" from="ColorRect/Control/Categories/Button" to="ColorRect/Control/Categories/Button" method="_on_pressed"]

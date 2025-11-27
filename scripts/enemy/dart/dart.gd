@@ -1,6 +1,5 @@
 extends Enemy
 
-@onready var anim := $AnimatedSprite2D
 @onready var cdTimer := $"Shoot CD"
 @onready var light := $PointLight2D
 
@@ -13,11 +12,18 @@ extends Enemy
 var isShooting := false
 var canShoot := false
 
+var max_prediction_disp := 60.0
+
 func _physics_process(_delta: float) -> void:
-	var playerPos := Global.player.global_position
-	anim.flip_h = playerPos.x > global_position.x
+	var target := Global.player.global_position
+	if Global.target_future:
+		var predicted := Global.get_predicted(2)
+		if (predicted - target).length() < max_prediction_disp:
+			target = predicted
 	
-	if abs(playerPos.y - global_position.y) <= shootMargin and canShoot:
+	anim.flip_h = target.x > global_position.x
+	
+	if abs(target.y - global_position.y) <= shootMargin and canShoot:
 		shoot()
 
 func shoot():
@@ -46,6 +52,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		state.linear_velocity = lastDir * speed
 
 func shoot_laser():
+	$Shoot.play()
 	var l : Laser = laser.instantiate()
 	
 	var dx = 3 if anim.flip_h else -3
@@ -62,3 +69,7 @@ func anim_frame_changed() -> void:
 	if anim:
 		if anim.frame == 3:
 			shoot_laser()
+			
+func get_entity_name():
+	return "dart"
+	

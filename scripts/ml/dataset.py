@@ -21,6 +21,8 @@ def make_samples(frames, N, K, maxEnemies, maxProjectiles):
       inputs = []
       targets = []
 
+      frames = frames[:1500]
+
       num_frames = len(frames)
       max_start = num_frames - N * K
 

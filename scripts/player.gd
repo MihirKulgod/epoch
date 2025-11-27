@@ -40,6 +40,7 @@ func _input(event: InputEvent) -> void:
 
 func dash():
 	dashQueued = true
+	$DashSound.play()
 
 func _physics_process(delta: float) -> void:
 	for key in dir.keys():
@@ -119,5 +120,15 @@ func spawn_afterimage():
 func hurt(_body: Node2D) -> void:
 	if _body.is_in_group("projectile"):
 		Global.master.die()
+		$DieSound.play()
+		
 	elif _body is Enemy:
 		_body.explode()
+
+func _process(_delta: float) -> void:
+	queue_redraw()
+
+func _draw() -> void:
+	if Settings.settings["debug_info"]:
+		draw_circle(Vector2.ZERO, 40, Color(1.0, 1.0, 1.0, 0.05), true)
+		draw_circle(Vector2.ZERO, 60, Color(1.0, 1.0, 1.0, 0.05), true)

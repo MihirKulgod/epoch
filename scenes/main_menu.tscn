@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cictfc4ljrf4h"]
+[gd_scene load_steps=14 format=3 uid="uid://cictfc4ljrf4h"]
 
 [ext_resource type="Script" uid="uid://c1o3yldu5frqp" path="res://scripts/scenes/win.gd" id="1_8ln24"]
 [ext_resource type="PackedScene" uid="uid://d2rigfsl3to6u" path="res://scenes/effects/cover.tscn" id="2_rtw2f"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://bpx0cjotvffol" path="res://scripts/ui/reset_and_new.gd" id="5_oa1go"]
 [ext_resource type="Script" uid="uid://dred6mv70ki5d" path="res://scripts/ui/dotdotdot.gd" id="6_rtw2f"]
 [ext_resource type="Script" uid="uid://dltnoyyodk1ya" path="res://scripts/ui/delete_on_connect.gd" id="7_tbmy8"]
+[ext_resource type="PackedScene" uid="uid://cbx6xe5j8b0dy" path="res://scenes/ui/button_click.tscn" id="10_5dd4i"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_826fv"]
 content_margin_left = 4.0
@@ -174,6 +175,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("6_rtw2f")
 label = "Establishing connection"
+
+[node name="ButtonClick" parent="." instance=ExtResource("10_5dd4i")]
 
 [connection signal="pressed" from="Control/Button" to="Control/Button" method="_on_pressed"]
 [connection signal="pressed" from="Control/Button3" to="Control/Button3" method="_on_pressed"]

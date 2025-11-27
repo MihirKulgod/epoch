@@ -4,11 +4,13 @@ var path := "user://settings.ini"
 
 var settings := {
 	"draw_future": false,
-	"debug_info": false
+	"debug_info": false,
+	"volume": 6
 }
 
 func _ready() -> void:
 	load_file()
+	set_global_volume(settings.get_or_add("volume", 6) * 10)
 
 func toggle(setting: String):
 	if setting in settings.keys():
@@ -38,3 +40,8 @@ func load_file():
 	for key in settings.keys():
 		settings[key] = file.get_value("Display", key, false)
 	
+func set_global_volume(percent: float):
+	percent = clamp(percent, 0.0, 100.0)
+	var linear = percent / 100.0
+	var db = linear_to_db(linear)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Master"), db)

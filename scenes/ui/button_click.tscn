@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://cbx6xe5j8b0dy"]
+
+[ext_resource type="AudioStream" uid="uid://b6ts8qqtcdv2v" path="res://sounds/ui/button.wav" id="1_6votv"]
+
+[node name="ButtonClick" type="AudioStreamPlayer2D" groups=["audio", "button_click"]]
+process_mode = 3
+stream = ExtResource("1_6votv")
+attenuation = 1e-05
+max_polyphony = 4

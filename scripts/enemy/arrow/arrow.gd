@@ -4,7 +4,6 @@ extends Enemy
 
 @onready var laser := preload("res://scenes/enemy/arrow/arrow_laser.tscn")
 
-@onready var anim = $AnimatedSprite2D
 @onready var light = $PointLight2D
 
 var canShoot := false
@@ -13,16 +12,14 @@ var aiming := Vector2.ZERO
 
 var flipDir := false
 
-var max_prediction_disp := 40.0
+var max_prediction_disp := 60.0
 
 func _physics_process(_delta: float) -> void:
 	var target := Global.player.global_position
 	var dp := target - global_position
 	
-	if Global.target_future and Global.futurePlayerPositions:
-		var p = Global.futurePlayerPositions
-		var i = 0
-		var predicted := Vector2(p[i], p[i+1])
+	if Global.target_future:
+		var predicted := Global.get_predicted(0)
 		if (predicted - target).length() < max_prediction_disp:
 			target = predicted
 	
@@ -46,6 +43,7 @@ func _integrate_forces(state: PhysicsDirectBodyState2D) -> void:
 		state.linear_velocity = (aiming * -1).normalized().rotated(Global.sign(flipDir) * 3 * PI / 4) * speed
 
 func shoot():
+	$ShootSound.play()
 	isShooting = true
 	anim.play("shoot")
 	canShoot = false
@@ -86,3 +84,6 @@ func anim_frame_changed() -> void:
 	if anim:
 		if anim.frame == 2:
 			shoot_laser()
+
+func get_entity_name():
+	return "arrow"
