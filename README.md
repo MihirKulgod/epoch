@@ -4,6 +4,13 @@
 Each round, the player’s behavior is logged and used to train a machine learning model that predicts future movement.  
 Certain enemies then aim attacks based on these predictions — creating an adaptive challenge that becomes smarter as you play.
 
+## How to Run
+- Go to the Releases section of this repository
+- Download the latest release (.zip)
+- Extract the contents
+- Run the included executable to start the game
+
+Currently supported: *Windows*
 ## Features
 - **Real-time data collection**  
   Every frame, the kinematic states (position–velocity pairs) of the player, enemies, and projectiles are appended to a JSONL dataset.  
