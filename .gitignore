@@ -4,3 +4,4 @@
 python/
 ml/__pycache__/
 *.ase
+*.exe
