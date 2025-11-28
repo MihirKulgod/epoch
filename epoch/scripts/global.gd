@@ -56,7 +56,7 @@ func shutdown_server():
 	OS.kill(processID)
 	
 	# Force close python execution
-	# OS.execute("taskkill", ["/F", "/IM", "python.exe"])
+	OS.execute("taskkill", ["/F", "/IM", "python.exe"])
 
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:

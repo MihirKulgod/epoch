@@ -16,6 +16,7 @@ func load_round() -> int:
 	
 	if error:
 		print("An error happened while loading data: ", error)
+		save_round(0)
 		return 0
 	return file.get_value("Game", "round", 0)
 	

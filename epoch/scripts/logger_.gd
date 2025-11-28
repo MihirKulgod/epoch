@@ -55,6 +55,10 @@ func finalize_log():
 	if file:
 		file.flush()
 		file.close()
+	
+	if not FileAccess.file_exists(temp_path):
+		var f = FileAccess.open(temp_path, FileAccess.WRITE)
+		f.close()
 		
 	DirAccess.copy_absolute(
 		ProjectSettings.globalize_path(temp_path),

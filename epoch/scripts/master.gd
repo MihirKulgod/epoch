@@ -104,44 +104,7 @@ var rounds := [
 		0,
 		Vector2(0.5, 0.5),
 		[
-			new_entry("dart", Vector2(0.1, 0.05)),
-			new_entry("dart", Vector2(0.9, 0.15)),
-			new_entry("dart", Vector2(0.3, 0.75)),
-			new_entry("dart", Vector2(0.7, 0.7)),
-			new_entry("plus", Vector2(0.05, 0.95)),
-			new_entry("plus", Vector2(0.05, 0.05))
+			new_entry("dart", Vector2(0.1, 0.05))
 		]
-	),
-	new_round(
-		1,
-		Vector2(0.5, 0.5),
-		[
-			new_entry("dart", Vector2(0.1, 0.1)),
-			new_entry("dart", Vector2(0.9, 0.1)),
-			new_entry("dart", Vector2(0.1, 0.9)),
-			new_entry("dart", Vector2(0.9, 0.9)),
-			new_entry("dart", Vector2(0.1, 0.5)),
-			new_entry("dart", Vector2(0.9, 0.5)),
-			new_entry("plus", Vector2(0.95, 0.95)),
-			new_entry("plus", Vector2(0.95, 0.05))
-		]
-	),
-	new_round(
-		2,
-		Vector2(0.05, 0.05),
-		[
-			new_entry("arrow", Vector2(0.95, 0.95)),
-			new_entry("plus", Vector2(0.05, 0.95)),
-			new_entry("plus", Vector2(0.5, 0.5)),
-			new_entry("plus", Vector2(0.75, 0.75)),
-			new_entry("plus", Vector2(0.95, 0.05))
-		]
-	),
-	new_round(
-		3,
-		Vector2(0.05, 0.05),
-		[
-			new_entry("arrow", Vector2(0.95, 0.95))
-		]
-	),
+	)
 ]
