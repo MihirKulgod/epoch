@@ -1,9 +1,0 @@
-[gd_scene format=3 uid="uid://d2rigfsl3to6u"]
-
-[node name="Cover" type="Node2D" groups=["cover"]]
-
-[node name="ColorRect" type="ColorRect" parent="."]
-z_index = 4096
-offset_right = 300.0
-offset_bottom = 180.0
-color = Color(0, 0, 0, 1)

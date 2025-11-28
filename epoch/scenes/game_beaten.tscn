@@ -1,0 +1,121 @@
+[gd_scene load_steps=11 format=3 uid="uid://cqkoocmngmylp"]
+
+[ext_resource type="Script" uid="uid://c7c566kanvrmv" path="res://scripts/ui/game_beaten.gd" id="1_5v2e1"]
+[ext_resource type="PackedScene" uid="uid://cbx6xe5j8b0dy" path="res://scenes/ui/button_click.tscn" id="1_57ksy"]
+[ext_resource type="Script" uid="uid://1d71t56g10xb" path="res://scripts/ui/switch_to_scene.gd" id="2_5d3s6"]
+[ext_resource type="PackedScene" uid="uid://d2rigfsl3to6u" path="res://scenes/effects/cover.tscn" id="2_scrm3"]
+[ext_resource type="Texture2D" uid="uid://cu12as4u1ogth" path="res://textures/ui/main-menu-bg.png" id="3_32igx"]
+[ext_resource type="Theme" uid="uid://ip3omcl1k1la" path="res://themes/main.tres" id="3_cw6m6"]
+[ext_resource type="PackedScene" uid="uid://c1y7fvh4ncvja" path="res://scenes/main.tscn" id="3_scrm3"]
+[ext_resource type="Script" uid="uid://clmbu8p77nm8" path="res://scripts/ui/quit_game.gd" id="4_5d3s6"]
+[ext_resource type="PackedScene" uid="uid://cictfc4ljrf4h" path="res://scenes/main_menu.tscn" id="6_57ksy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_r4oei"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.22, 0.22, 0.22, 0)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
+
+[node name="Game Beaten" type="Node2D"]
+script = ExtResource("1_5v2e1")
+
+[node name="Cover" parent="." instance=ExtResource("2_scrm3")]
+
+[node name="BG" type="Sprite2D" parent="."]
+position = Vector2(150, 90)
+scale = Vector2(2, 2)
+texture = ExtResource("3_32igx")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 300.0
+offset_bottom = 180.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.123
+anchor_right = 0.5
+anchor_bottom = 0.158
+offset_left = -116.0
+offset_top = -1.0
+offset_right = 116.0
+offset_bottom = 49.0
+grow_horizontal = 2
+theme = ExtResource("3_cw6m6")
+theme_override_font_sizes/normal_font_size = 23
+text = "GAME COMPLETED"
+fit_content = true
+scroll_active = false
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="Control"]
+z_index = 100
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -4.0
+offset_right = 30.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_cw6m6")
+text = "Continue"
+script = ExtResource("2_5d3s6")
+scene = ExtResource("3_scrm3")
+
+[node name="Button3" type="Button" parent="Control"]
+z_index = 100
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -53.0
+offset_top = 22.0
+offset_right = 53.0
+offset_bottom = 46.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_cw6m6")
+text = "Main Menu"
+script = ExtResource("2_5d3s6")
+scene = ExtResource("6_57ksy")
+
+[node name="Button2" type="Button" parent="Control"]
+z_index = 100
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = 60.0
+offset_right = 30.0
+offset_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_cw6m6")
+theme_override_styles/hover = SubResource("StyleBoxFlat_r4oei")
+text = "Quit"
+script = ExtResource("4_5d3s6")
+
+[node name="ButtonClick" parent="." instance=ExtResource("1_57ksy")]
+
+[connection signal="pressed" from="Control/Button" to="Control/Button" method="_on_pressed"]
+[connection signal="pressed" from="Control/Button3" to="Control/Button3" method="_on_pressed"]
+[connection signal="pressed" from="Control/Button2" to="Control/Button2" method="_on_pressed"]

@@ -1,0 +1,81 @@
+[gd_scene load_steps=10 format=3 uid="uid://bk7vemeu3d21b"]
+
+[ext_resource type="Script" uid="uid://dggnye5iwotla" path="res://scripts/enemy/dart/dart_laser.gd" id="1_absyt"]
+[ext_resource type="Texture2D" uid="uid://dni16xef3cy4r" path="res://textures/enemy/dart/dart_laser.png" id="1_xqcho"]
+[ext_resource type="Texture2D" uid="uid://dkhh48no80o0k" path="res://textures/light.png" id="3_iojnf"]
+
+[sub_resource type="Curve" id="Curve_absyt"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xjynw"]
+atlas = ExtResource("1_xqcho")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tllrl"]
+atlas = ExtResource("1_xqcho")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kbhcj"]
+atlas = ExtResource("1_xqcho")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cf0co"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xjynw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tllrl")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kbhcj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 9.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7mxna"]
+size = Vector2(6, 1)
+
+[node name="DartLaser" type="RigidBody2D" groups=["destroyable", "projectile"]]
+collision_layer = 4
+collision_mask = 128
+mass = 0.001
+gravity_scale = 0.0
+script = ExtResource("1_absyt")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 5
+one_shot = true
+explosiveness = 1.0
+randomness = 0.44
+spread = 180.0
+gravity = Vector2(0, 20)
+initial_velocity_min = 12.3
+initial_velocity_max = 12.3
+angular_velocity_min = 222.68
+angular_velocity_max = 222.68
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_absyt")
+color = Color(0.71566445, 1, 0.6895193, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_cf0co")
+autoplay = "default"
+frame_progress = 0.22719978
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+position = Vector2(0, 0.5)
+shape = SubResource("RectangleShape2D_7mxna")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+color = Color(0, 1, 0.2166667, 1)
+energy = 0.5
+texture = ExtResource("3_iojnf")
+texture_scale = 0.01

@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://bv3s1xnraclt4"]
+
+[ext_resource type="Script" uid="uid://5ueqmykqtwrk" path="res://scripts/level_maker.gd" id="1_0itpi"]
+[ext_resource type="PackedScene" uid="uid://md0g04hn6162" path="res://scenes/player.tscn" id="2_gqp6l"]
+[ext_resource type="PackedScene" uid="uid://c5h76xft6753b" path="res://scenes/enemy/plus/plus.tscn" id="3_gqp6l"]
+[ext_resource type="PackedScene" uid="uid://dpx4j6jwnxl05" path="res://scenes/enemy/arrow/arrow.tscn" id="4_m5tlf"]
+[ext_resource type="PackedScene" uid="uid://bb3aevix4awbw" path="res://scenes/enemy/scout/scout.tscn" id="5_vix10"]
+
+[node name="LevelMaker" type="Node2D"]
+script = ExtResource("1_0itpi")
+round_number = 19
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 300.0
+offset_bottom = 180.0
+color = Color(0.7162962, 0.7162962, 0.7162962, 1)
+
+[node name="Player" parent="." instance=ExtResource("2_gqp6l")]
+position = Vector2(35, 91)
+
+[node name="Scout" parent="." instance=ExtResource("5_vix10")]
+position = Vector2(250, 22)
+
+[node name="Scout6" parent="." instance=ExtResource("5_vix10")]
+position = Vector2(252, 162)
+
+[node name="Plus" parent="." instance=ExtResource("3_gqp6l")]
+position = Vector2(210, 28)
+
+[node name="Plus2" parent="." instance=ExtResource("3_gqp6l")]
+position = Vector2(180, 71)
+
+[node name="Plus5" parent="." instance=ExtResource("3_gqp6l")]
+position = Vector2(210, 162)
+
+[node name="Plus3" parent="." instance=ExtResource("3_gqp6l")]
+position = Vector2(182, 116)
+
+[node name="Arrow" parent="." instance=ExtResource("4_m5tlf")]
+position = Vector2(276, 61)
+
+[node name="Arrow2" parent="." instance=ExtResource("4_m5tlf")]
+position = Vector2(270, 89)
+
+[node name="Arrow3" parent="." instance=ExtResource("4_m5tlf")]
+position = Vector2(276, 114)

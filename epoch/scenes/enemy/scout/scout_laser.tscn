@@ -1,0 +1,130 @@
+[gd_scene load_steps=16 format=3 uid="uid://bjich8odgeeo6"]
+
+[ext_resource type="Script" uid="uid://diyj2lgii6hev" path="res://scripts/enemy/scout/scout_laser.gd" id="1_1u5uu"]
+[ext_resource type="Texture2D" uid="uid://brus4ueksycxr" path="res://textures/enemy/scout/scout_laser.png" id="2_1u5uu"]
+[ext_resource type="Texture2D" uid="uid://dkhh48no80o0k" path="res://textures/light.png" id="3_50s5o"]
+
+[sub_resource type="Curve" id="Curve_absyt"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bi7by"]
+atlas = ExtResource("2_1u5uu")
+region = Rect2(0, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fc3kj"]
+atlas = ExtResource("2_1u5uu")
+region = Rect2(8, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4pfxk"]
+atlas = ExtResource("2_1u5uu")
+region = Rect2(16, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bddj3"]
+atlas = ExtResource("2_1u5uu")
+region = Rect2(24, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w4wd4"]
+atlas = ExtResource("2_1u5uu")
+region = Rect2(32, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3as2k"]
+atlas = ExtResource("2_1u5uu")
+region = Rect2(40, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_883oj"]
+atlas = ExtResource("2_1u5uu")
+region = Rect2(48, 0, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kk1ua"]
+atlas = ExtResource("2_1u5uu")
+region = Rect2(56, 0, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_oytqt"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bi7by")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fc3kj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4pfxk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bddj3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w4wd4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3as2k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_883oj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kk1ua")
+}],
+"loop": true,
+"name": &"default",
+"speed": 9.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7mxna"]
+size = Vector2(6, 2)
+
+[sub_resource type="Curve" id="Curve_py8sb"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[node name="ScoutLaser" type="RigidBody2D" groups=["destroyable", "projectile"]]
+collision_layer = 4
+collision_mask = 128
+mass = 0.001
+gravity_scale = 0.0
+script = ExtResource("1_1u5uu")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+emitting = false
+amount = 5
+one_shot = true
+explosiveness = 1.0
+randomness = 0.44
+spread = 180.0
+gravity = Vector2(0, 20)
+initial_velocity_min = 12.3
+initial_velocity_max = 12.3
+angular_velocity_min = 222.68
+angular_velocity_max = 222.68
+scale_amount_min = 2.0
+scale_amount_max = 2.0
+scale_amount_curve = SubResource("Curve_absyt")
+color = Color(0.9471994, 0.9471994, 0.9471994, 1)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(2, 0.5)
+sprite_frames = SubResource("SpriteFrames_oytqt")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, 0)
+shape = SubResource("RectangleShape2D_7mxna")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+visible = false
+color = Color(1, 0, 0, 1)
+energy = 0.8
+texture = ExtResource("3_50s5o")
+texture_scale = 0.02
+
+[node name="Trail" type="CPUParticles2D" parent="."]
+visible = false
+position = Vector2(-1, 0.5)
+amount = 100
+lifetime = 0.2
+emission_shape = 1
+emission_sphere_radius = 1.0
+gravity = Vector2(0, 0)
+scale_amount_curve = SubResource("Curve_py8sb")

@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://dwt8munclu6tc"]
+
+[ext_resource type="Script" uid="uid://bki8naxnksc0i" path="res://scripts/fade.gd" id="1_oq4gn"]
+
+[node name="Fading" type="Node2D"]
+script = ExtResource("1_oq4gn")
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+
+[node name="Black" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="ColorRect" type="ColorRect" parent="Black"]
+offset_left = -1.0
+offset_top = -3.0
+offset_right = 300.0
+offset_bottom = 180.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 2
+color = Color(0, 0, 0, 0)
+metadata/_edit_use_anchors_ = true
