@@ -9,6 +9,7 @@ Certain enemies then aim attacks based on these predictions — creating an adap
 - Download the latest release (.zip)
 - Extract the contents
 - Run the included executable to start the game
+- If the game gets stuck on "Connecting to server", install [Microsoft Visual C++ Redistributable 2015–2022 (x64)](https://aka.ms/vs/17/release/vc_redist.x64.exe), which is required by modern Python builds
 
 Currently supported: *Windows*
 ## Features
