@@ -178,6 +178,8 @@ async def inference(ws, data):
 
 def receive_path(path):
       global MODEL_PATH
+      global model
+      global optimizer
       MODEL_PATH = path
 
       if os.path.exists(MODEL_PATH):
@@ -197,7 +199,8 @@ def receive_path(path):
 
 async def reset(ws):
       print("Resetting!")
-      global model, optimizer
+      global model
+      global optimizer
 
       model = PlayerModel(N, MAX_ENEMIES, MAX_PROJECTILES).to(device)
       model.eval()

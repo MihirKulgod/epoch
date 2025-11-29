@@ -3,8 +3,7 @@ extends Node
 var logPath := "user://run_log.jsonl"
 var roundsPath := "res://rounds.jsonl"
 
-var exePath = OS.get_executable_path().get_base_dir() + "/python/Scripts/python.exe"
-var pyPath = OS.get_executable_path().get_base_dir() + "/ml/server.py"
+var exePath = OS.get_executable_path().get_base_dir() + "/dist/server/server.exe"
 
 @onready var fadeScene := preload("res://scenes/effects/fading.tscn")
 @onready var loadScene := preload("res://scenes/ui/loading.tscn")
@@ -46,8 +45,8 @@ func start_server_thread():
 	print("Initializing Python process..")
 	processID = OS.create_process(
 		exePath,
-		[pyPath],
-		true
+		[],
+		false
 	)
 	print("Python process initialized with process ID " + str(processID))
 

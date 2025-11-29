@@ -6,3 +6,6 @@ ml/__pycache__/
 *.ase
 *.exe
 *.zip
+dist/
+build/
+*.spec

@@ -56,8 +56,8 @@ func load_file():
 			printerr("An error occurred while loading settings data: ", error)
 			return
 	
-		for key in settings.keys():
-			settings[key] = file.get_value("Setting", key, defaultSettings[key])
+	for key in settings.keys():
+		settings[key] = file.get_value("Setting", key, defaultSettings[key])
 	
 func set_global_volume(percent: float):
 	percent = clamp(percent, 0.0, 100.0)
