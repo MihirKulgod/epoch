@@ -9,6 +9,12 @@ var settings := {
 	"volume": 6
 }
 
+var defaultSettings := {
+	"draw_future": false,
+	"debug_info": false,
+	"volume": 6
+}
+
 func _ready() -> void:
 	load_file()
 	set_global_volume(settings.get_or_add("volume", 6) * 10)
@@ -25,7 +31,7 @@ func save_file() -> void:
 	var file := ConfigFile.new()
 	
 	for key in settings.keys():
-		file.set_value("Display", key, settings[key])
+		file.set_value("Setting", key, settings[key])
 		
 	var error := file.save(path)
 	if error:
@@ -35,7 +41,10 @@ func load_file():
 	var file := ConfigFile.new()
 	var error := file.load(path)
 	
+	print("Attempting to load settings file from "+ProjectSettings.globalize_path(path))
+	
 	if error == 7:
+		print("Settings file not found, creating one from default.")
 		# If file not found, restore settings to default
 		DirAccess.copy_absolute(
 			ProjectSettings.globalize_path(default),
@@ -45,9 +54,10 @@ func load_file():
 		error = file.load(path)
 		if error:
 			printerr("An error occurred while loading settings data: ", error)
+			return
 	
-	for key in settings.keys():
-		settings[key] = file.get_value("Display", key, false)
+		for key in settings.keys():
+			settings[key] = file.get_value("Setting", key, defaultSettings[key])
 	
 func set_global_volume(percent: float):
 	percent = clamp(percent, 0.0, 100.0)

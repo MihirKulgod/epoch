@@ -35,6 +35,7 @@ var trainingEnded := false
 func _ready():
 	var thread := Thread.new()
 	var callable := Callable(self, "start_server_thread")
+	print("Calling start_server_thread..")
 	thread.start(callable)
 	
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -42,11 +43,13 @@ func _ready():
 	current_round = Data.load_round()
 	
 func start_server_thread():
+	print("Initializing Python process..")
 	processID = OS.create_process(
 		exePath,
 		[pyPath],
-		false
+		true
 	)
+	print("Python process initialized with process ID " + str(processID))
 
 func shutdown_server():
 	if processID < 0:

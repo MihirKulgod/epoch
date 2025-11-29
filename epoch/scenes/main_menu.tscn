@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://cictfc4ljrf4h"]
 
-[ext_resource type="Script" uid="uid://c1o3yldu5frqp" path="res://scripts/scenes/win.gd" id="1_8ln24"]
+[ext_resource type="Script" uid="uid://bacow1gu5w7ht" path="res://scripts/scenes/main_menu.gd" id="1_lgwnu"]
 [ext_resource type="PackedScene" uid="uid://d2rigfsl3to6u" path="res://scenes/effects/cover.tscn" id="2_rtw2f"]
 [ext_resource type="Theme" uid="uid://ip3omcl1k1la" path="res://themes/main.tres" id="3_jk1qb"]
 [ext_resource type="Texture2D" uid="uid://cu12as4u1ogth" path="res://textures/ui/main-menu-bg.png" id="3_lgwnu"]
@@ -49,7 +49,7 @@ corner_radius_bottom_left = 3
 corner_detail = 5
 
 [node name="Main Menu" type="Node2D"]
-script = ExtResource("1_8ln24")
+script = ExtResource("1_lgwnu")
 
 [node name="Cover" parent="." instance=ExtResource("2_rtw2f")]
 
