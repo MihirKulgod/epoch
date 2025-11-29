@@ -20,11 +20,16 @@ Currently supported: *Windows*
 - **Between-wave training**  
   When a wave is cleared, the ML model trains on the data produced during that round.
 
+  ![Prediction Demo](preview/training.gif)
+
 - **WebSocket communication between Godot and Python**  
   Allows the game to receive real-time movement predictions from the PyTorch model during gameplay.
 
 - **Prediction-based enemy behavior**  
-  After Wave 10, more advanced enemies use the predicted future positions of the player to aim precise and difficult-to-dodge attacks.
+  After Wave 10, more advanced enemies use the predicted future positions of the player to aim precise and difficult-to-dodge attacks
+  
+  ![Prediction Demo](preview/prediction.gif)
+  
 
 - **20 handcrafted enemy waves**  
   Each designed to gradually exploit increasing predictability in the player's movement patterns.
