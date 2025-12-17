@@ -4,12 +4,16 @@
 Each round, the player’s behavior is logged and used to train a machine learning model that predicts future movement.  
 Certain enemies then aim attacks based on these predictions — creating an adaptive challenge that becomes smarter as you play.
 
-## How to Run
+## How to Play
+Avoid projectiles and make contact with enemies to destroy them!
+- Movement: WASD
+- Dash: Space
+
+## How to Run Game
 - Go to the Releases section of this repository
 - Download the latest release (.zip)
 - Extract the contents
 - Run the included executable to start the game
-- If the game gets stuck on "Connecting to server", install [Microsoft Visual C++ Redistributable 2015–2022 (x64)](https://aka.ms/vs/17/release/vc_redist.x64.exe), which is required by modern Python builds
 
 Currently supported: *Windows*
 ## Features
@@ -44,3 +48,5 @@ Currently supported: *Windows*
 | Data Formats    | JSON / JSONL / INI  |
 | Languages       | Python, GDScript    |
 
+## Troubleshooting
+- If the game gets stuck on "Connecting to server", install [Microsoft Visual C++ Redistributable 2015–2022 (x64)](https://aka.ms/vs/17/release/vc_redist.x64.exe), which is required by modern Python builds
